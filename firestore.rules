@@ -29,5 +29,20 @@ service cloud.firestore {
 
       allow delete: if false;
     }
+
+    match /orders/{orderId} {
+
+      // A signed-in user may create an order tagged with their own uid.
+      allow create: if request.auth != null
+                    && request.resource.data.customerUid == request.auth.uid;
+
+      // A user can read their own orders; admins can read every order.
+      allow read: if request.auth != null && (
+                    resource.data.customerUid == request.auth.uid
+                    || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+                  );
+
+      allow update, delete: if false;
+    }
   }
 }

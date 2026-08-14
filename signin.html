@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — Kazbegi Gear</title>
+<title>Sign In — Kazbegi Gear</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,50 +28,27 @@
   </div>
 </header>
 
-<main class="wrap admin-wrap">
-  <p id="admin-status" class="admin-status">Checking your access…</p>
-
-  <div id="admin-content" hidden>
-    <div class="admin-head">
-      <h1>Registered users</h1>
-      <p id="admin-count" class="admin-count"></p>
-    </div>
-    <div class="admin-table-wrap">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Registered</th>
-            <th>Consent</th>
-          </tr>
-        </thead>
-        <tbody id="admin-table-body"></tbody>
-      </table>
+<main class="wrap auth-wrap">
+  <div class="auth-card">
+    <div class="auth-card-head">
+      <h1>Sign in</h1>
+      <p>Welcome back — sign in to reserve your gear.</p>
     </div>
 
-    <div class="admin-head admin-head-orders">
-      <h1>Order history</h1>
-      <p id="orders-count" class="admin-count"></p>
-    </div>
-    <div class="admin-table-wrap">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Phone</th>
-            <th>Items</th>
-            <th>Days</th>
-            <th>Payment</th>
-            <th>Total</th>
-            <th>Placed</th>
-          </tr>
-        </thead>
-        <tbody id="orders-table-body"></tbody>
-      </table>
-    </div>
+    <form id="signin-form" class="auth-form" novalidate>
+      <p class="auth-error" id="signin-error" hidden></p>
+      <div class="field">
+        <label for="signin-email">Email</label>
+        <input type="email" id="signin-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="signin-password">Password</label>
+        <input type="password" id="signin-password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="signin-submit">Sign In</button>
+    </form>
+
+    <p class="auth-switch">New here? <a href="register.html">Create an account</a></p>
   </div>
 </main>
 
@@ -82,6 +59,6 @@
   </div>
 </footer>
 
-<script type="module" src="admin.js"></script>
+<script type="module" src="signin.js"></script>
 </body>
 </html>

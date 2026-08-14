@@ -10,6 +10,8 @@ const statusEl = document.getElementById("admin-status");
 const contentEl = document.getElementById("admin-content");
 const countEl = document.getElementById("admin-count");
 const tbody = document.getElementById("admin-table-body");
+const ordersCountEl = document.getElementById("orders-count");
+const ordersBody = document.getElementById("orders-table-body");
 
 function formatDate(ts) {
   if (!ts || typeof ts.toDate !== "function") return "—";
@@ -30,7 +32,7 @@ watchAuth(async (state) => {
   const { user, profile } = state;
 
   if (!user) {
-    location.href = "auth.html";
+    location.href = "signin.html";
     return;
   }
 
@@ -69,5 +71,38 @@ watchAuth(async (state) => {
     contentEl.hidden = true;
     statusEl.hidden = false;
     statusEl.textContent = "Couldn't load registered users. Please try again later.";
+    return;
+  }
+
+  try {
+    const ordersSnap = await getDocs(collection(db, "orders"));
+    const orders = [];
+    ordersSnap.forEach((docSnap) => orders.push(docSnap.data()));
+    orders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+    ordersCountEl.textContent = `${orders.length} ${orders.length === 1 ? "order" : "orders"}`;
+
+    ordersBody.innerHTML = orders
+      .map((o) => {
+        const itemsText = (o.items || [])
+          .map((i) => `${i.qty} × ${escapeHtml(i.name)}${i.options ? ` (${escapeHtml(i.options)})` : ""}`)
+          .join(", ");
+        const paymentLabel = o.paymentMethod === "online" ? "Card online" : "Cash / card at cashier";
+        return `
+      <tr>
+        <td>${escapeHtml(o.customerName)}</td>
+        <td>${escapeHtml(o.customerPhone)}</td>
+        <td class="admin-cell-wrap">${itemsText}</td>
+        <td>${o.days}</td>
+        <td>${paymentLabel}</td>
+        <td>${o.total} GEL</td>
+        <td>${formatDate(o.createdAt)}</td>
+      </tr>
+    `;
+      })
+      .join("");
+  } catch (err) {
+    console.error(err);
+    ordersCountEl.textContent = "Couldn't load orders.";
   }
 });

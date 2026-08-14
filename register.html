@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In — Kazbegi Gear</title>
+<title>Register — Kazbegi Gear</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -30,25 +30,12 @@
 
 <main class="wrap auth-wrap">
   <div class="auth-card">
-    <div class="auth-tabs">
-      <button type="button" class="auth-tab is-active" id="tab-signin" data-tab="signin">Sign In</button>
-      <button type="button" class="auth-tab" id="tab-signup" data-tab="signup">Register</button>
+    <div class="auth-card-head">
+      <h1>Create an account</h1>
+      <p>Register once to reserve gear and manage your rentals.</p>
     </div>
 
-    <form id="signin-form" class="auth-form" novalidate>
-      <p class="auth-error" id="signin-error" hidden></p>
-      <div class="field">
-        <label for="signin-email">Email</label>
-        <input type="email" id="signin-email" required autocomplete="email">
-      </div>
-      <div class="field">
-        <label for="signin-password">Password</label>
-        <input type="password" id="signin-password" required autocomplete="current-password">
-      </div>
-      <button type="submit" class="btn btn-primary btn-block" id="signin-submit">Sign In</button>
-    </form>
-
-    <form id="signup-form" class="auth-form" novalidate hidden>
+    <form id="signup-form" class="auth-form" novalidate>
       <p class="auth-error" id="signup-error" hidden></p>
       <div class="field-row">
         <div class="field">
@@ -89,6 +76,8 @@
 
       <button type="submit" class="btn btn-primary btn-block" id="signup-submit" disabled>Create account</button>
     </form>
+
+    <p class="auth-switch">Already have an account? <a href="signin.html">Sign in</a></p>
   </div>
 </main>
 
@@ -99,6 +88,6 @@
   </div>
 </footer>
 
-<script type="module" src="auth.js"></script>
+<script type="module" src="register.js"></script>
 </body>
 </html>

@@ -25,7 +25,7 @@ export function doSignOut() {
 
 export function renderHeaderAuth(container, { user, profile }, { onSignOut } = {}) {
   if (!user) {
-    container.innerHTML = `<a href="auth.html" class="btn-header-auth">Sign In</a>`;
+    container.innerHTML = `<a href="signin.html" class="btn-header-auth">Sign In</a>`;
     return;
   }
   const name = profile ? profile.firstName : user.email;
