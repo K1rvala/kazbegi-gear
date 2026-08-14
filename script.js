@@ -113,27 +113,58 @@
     reserveBtn.disabled = !anyQty;
   }
 
-  reserveBtn.addEventListener("click", () => {
+  reserveBtn.addEventListener("click", async () => {
     if (!window.__currentUserProfile) {
       location.href = "auth.html";
       return;
     }
+    if (reserveBtn.disabled) return;
 
     const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
-    const items = itemCards
-      .map((card) => {
-        const qty = parseInt(card.querySelector(".qty-input").value, 10) || 0;
-        return qty > 0 ? `${qty} × ${card.dataset.name}` : null;
-      })
-      .filter(Boolean);
+    const orderItems = [];
+    const summaryParts = [];
+
+    itemCards.forEach((card) => {
+      const qty = parseInt(card.querySelector(".qty-input").value, 10) || 0;
+      if (qty <= 0) return;
+      const name = card.dataset.name;
+      const price = parseFloat(card.dataset.price);
+      orderItems.push({
+        name,
+        qty,
+        price,
+        options: describeOptions(card),
+        lineTotal: price * qty * days,
+      });
+      summaryParts.push(`${qty} × ${name}`);
+    });
 
     const paymentInput = document.querySelector('input[name="payment-method"]:checked');
-    const paymentLabel = paymentInput && paymentInput.value === "online" ? "Card online" : "Cash or card at cashier";
+    const paymentMethod = paymentInput ? paymentInput.value : "cashier";
+    const paymentLabel = paymentMethod === "online" ? "Card online" : "Cash or card at cashier";
+    const total = parseFloat(ticketTotalAmount.textContent) || 0;
+    const totalLabel = ticketTotalAmount.textContent;
     const profile = window.__currentUserProfile;
     const greeting = profile ? `${profile.firstName} ${profile.lastName} — ` : "";
 
-    confirmSummary.textContent = `${greeting}${items.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${ticketTotalAmount.textContent}. Payment: ${paymentLabel}.`;
-    confirmOverlay.classList.add("is-open");
+    reserveBtn.disabled = true;
+    try {
+      if (typeof window.saveOrder !== "function") throw new Error("Order system not ready");
+      await window.saveOrder({ items: orderItems, days, paymentMethod, total });
+
+      itemCards.forEach((card) => {
+        card.querySelector(".qty-input").value = 0;
+      });
+      daysInput.value = 1;
+      render();
+
+      confirmSummary.textContent = `${greeting}${summaryParts.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${totalLabel}. Payment: ${paymentLabel}.`;
+      confirmOverlay.classList.add("is-open");
+    } catch (err) {
+      console.error(err);
+      render();
+      alert("Something went wrong placing your reservation. Please try again.");
+    }
   });
 
   confirmClose.addEventListener("click", () => {

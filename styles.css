@@ -660,6 +660,8 @@ button{font-family:inherit;}
 }
 .role-user{ background:var(--snow-dim); color:var(--ink-soft); }
 .role-admin{ background:var(--amber-tint); color:var(--amber-dark); }
+.admin-head-orders{ margin-top:40px; }
+.admin-cell-wrap{ white-space:normal; min-width:220px; }
 
 /* ---- responsive ---- */
 @media (max-width: 980px){
