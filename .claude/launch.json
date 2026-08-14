@@ -6,6 +6,12 @@
       "runtimeExecutable": "powershell",
       "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\user\\Desktop\\CC_test\\.serve.ps1"],
       "port": 8765
+    },
+    {
+      "name": "ski-rental-site-verify",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\user\\Desktop\\CC_test\\.serve.ps1", "-Port", "8766"],
+      "port": 8766
     }
   ]
 }
