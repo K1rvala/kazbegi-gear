@@ -48,12 +48,11 @@
 
   function describeOptions(card) {
     const parts = [];
-    const select = card.querySelector(".option-select");
-    if (select) {
+    card.querySelectorAll(".option-select").forEach((select) => {
       const labelEl = card.querySelector(`label[for="${select.id}"]`);
       const label = labelEl ? labelEl.textContent : "";
       parts.push(`${label}: ${select.value}`);
-    }
+    });
     const curved = card.querySelector('input[type="checkbox"]');
     if (curved) {
       parts.push(curved.checked ? "Curved shaft" : "Straight shaft");
@@ -115,7 +114,7 @@
 
   reserveBtn.addEventListener("click", async () => {
     if (!window.__currentUserProfile) {
-      location.href = "auth.html";
+      location.href = "signin.html";
       return;
     }
     if (reserveBtn.disabled) return;

@@ -32,7 +32,7 @@ watchAuth(async (state) => {
   const { user, profile } = state;
 
   if (!user) {
-    location.href = "auth.html";
+    location.href = "signin.html";
     return;
   }
 
