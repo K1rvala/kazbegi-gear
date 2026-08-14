@@ -68,6 +68,13 @@
 
     itemCards.forEach((card) => {
       const qty = parseInt(card.querySelector(".qty-input").value, 10) || 0;
+
+      const badge = card.querySelector(".item-trigger-badge");
+      if (badge) {
+        badge.textContent = qty;
+        badge.hidden = qty <= 0;
+      }
+
       if (qty <= 0) return;
       anyQty = true;
 

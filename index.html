@@ -99,17 +99,34 @@
           <div class="item-media">
             <img src="images/helmet.jpg" alt="Ski helmet" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Helmet</h3>
             <p class="item-price">5 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
           </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-helmet">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-helmet" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+          <div class="item-config" id="config-helmet" role="dialog" aria-modal="true" aria-labelledby="config-helmet-title">
+            <div class="item-config-head">
+              <h4 id="config-helmet-title">Helmet</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
             </div>
+            <div class="option-row">
+              <label for="helmet-size">Size</label>
+              <select id="helmet-size" class="option-select">
+                <option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option>
+              </select>
+            </div>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-helmet">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-helmet" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
@@ -117,17 +134,34 @@
           <div class="item-media">
             <img src="images/ski-glasses.jpg" alt="Ski goggles" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Ski Glasses</h3>
             <p class="item-price">5 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
           </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-glasses">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-glasses" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+          <div class="item-config" id="config-glasses" role="dialog" aria-modal="true" aria-labelledby="config-glasses-title">
+            <div class="item-config-head">
+              <h4 id="config-glasses-title">Ski Glasses</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
             </div>
+            <div class="option-row">
+              <label for="glasses-size">Size</label>
+              <select id="glasses-size" class="option-select">
+                <option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option>
+              </select>
+            </div>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-glasses">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-glasses" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
@@ -135,17 +169,34 @@
           <div class="item-media">
             <img src="images/balaclava.jpg" alt="Balaclava" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Balaklava</h3>
             <p class="item-price">5 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
           </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-balaklava">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-balaklava" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+          <div class="item-config" id="config-balaklava" role="dialog" aria-modal="true" aria-labelledby="config-balaklava-title">
+            <div class="item-config-head">
+              <h4 id="config-balaklava-title">Balaklava</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
             </div>
+            <div class="option-row">
+              <label for="balaklava-size">Size</label>
+              <select id="balaklava-size" class="option-select">
+                <option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option>
+              </select>
+            </div>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-balaklava">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-balaklava" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
@@ -157,15 +208,25 @@
         <h2 id="cat-skis"><span class="cat-index">02</span> Skis</h2>
         <p>Any pair, 30 GEL per day — choose your ski length, foot size, and weight.</p>
       </div>
-      <div class="item-grid item-grid-wide">
+      <div class="item-grid">
 
-        <article class="item-card item-card-config" data-name="Skis" data-price="30" data-unit="GEL/day">
+        <article class="item-card" data-name="Skis" data-price="30" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/skis.jpg" alt="Pair of skis" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Skis</h3>
             <p class="item-price">30 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-skis" role="dialog" aria-modal="true" aria-labelledby="config-skis-title">
+            <div class="item-config-head">
+              <h4 id="config-skis-title">Skis</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="ski-size">Ski length</label>
               <select id="ski-size" class="option-select">
@@ -207,24 +268,35 @@
                 <option>100+ kg</option>
               </select>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-skis">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-skis" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-skis">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-skis" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
-        <article class="item-card item-card-config" data-name="Ski Sticks" data-price="10" data-unit="GEL/day">
+        <article class="item-card" data-name="Ski Sticks" data-price="10" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/ski-poles.jpg" alt="Ski sticks" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Ski Sticks</h3>
             <p class="item-price">10 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-sticks" role="dialog" aria-modal="true" aria-labelledby="config-sticks-title">
+            <div class="item-config-head">
+              <h4 id="config-sticks-title">Ski Sticks</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="stick-height">Stick height</label>
               <select id="stick-height" class="option-select">
@@ -242,14 +314,15 @@
                 <span class="switch-track" aria-hidden="true"></span>
               </label>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-sticks">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-sticks" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-sticks">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-sticks" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
@@ -261,15 +334,25 @@
         <h2 id="cat-snowboards"><span class="cat-index">03</span> Snowboards</h2>
         <p>Any board, 30 GEL per day — choose your foot size and weight.</p>
       </div>
-      <div class="item-grid item-grid-wide">
+      <div class="item-grid">
 
-        <article class="item-card item-card-config" data-name="Snowboard" data-price="30" data-unit="GEL/day">
+        <article class="item-card" data-name="Snowboard" data-price="30" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/snowboard.jpg" alt="Snowboard" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Snowboard</h3>
             <p class="item-price">30 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-snowboard" role="dialog" aria-modal="true" aria-labelledby="config-snowboard-title">
+            <div class="item-config-head">
+              <h4 id="config-snowboard-title">Snowboard</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="snowboard-foot-size">Foot size (EU)</label>
               <select id="snowboard-foot-size" class="option-select">
@@ -299,14 +382,15 @@
                 <option>100+ kg</option>
               </select>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-snowboard">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-snowboard" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-snowboard">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-snowboard" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
@@ -318,15 +402,25 @@
         <h2 id="cat-footwear"><span class="cat-index">04</span> Footwear</h2>
         <p>Boots fitted to your shoe size, 20 GEL per day.</p>
       </div>
-      <div class="item-grid item-grid-wide">
+      <div class="item-grid">
 
-        <article class="item-card item-card-config" data-name="Ski Boots" data-price="20" data-unit="GEL/day">
+        <article class="item-card" data-name="Ski Boots" data-price="20" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/ski-boots.jpg" alt="Ski boots" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Ski Boots</h3>
             <p class="item-price">20 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-skiboots" role="dialog" aria-modal="true" aria-labelledby="config-skiboots-title">
+            <div class="item-config-head">
+              <h4 id="config-skiboots-title">Ski Boots</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="ski-boot-size">EU shoe size</label>
               <select id="ski-boot-size" class="option-select">
@@ -335,24 +429,35 @@
                 <option>44</option><option>45</option><option>46</option><option>47</option>
               </select>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-skiboots">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-skiboots" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-skiboots">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-skiboots" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
-        <article class="item-card item-card-config" data-name="Snowboard Boots" data-price="20" data-unit="GEL/day">
+        <article class="item-card" data-name="Snowboard Boots" data-price="20" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/snowboard-boots.jpg" alt="Snowboard boots" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Snowboard Boots</h3>
             <p class="item-price">20 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-snbboots" role="dialog" aria-modal="true" aria-labelledby="config-snbboots-title">
+            <div class="item-config-head">
+              <h4 id="config-snbboots-title">Snowboard Boots</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="snb-boot-size">EU shoe size</label>
               <select id="snb-boot-size" class="option-select">
@@ -361,14 +466,15 @@
                 <option>44</option><option>45</option><option>46</option><option>47</option>
               </select>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-snbboots">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-snbboots" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-snbboots">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-snbboots" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
@@ -380,15 +486,25 @@
         <h2 id="cat-clothing"><span class="cat-index">05</span> Clothing</h2>
         <p>Shell layers, sized to fit.</p>
       </div>
-      <div class="item-grid item-grid-wide">
+      <div class="item-grid">
 
-        <article class="item-card item-card-config" data-name="Ski Jacket" data-price="20" data-unit="GEL/day">
+        <article class="item-card" data-name="Ski Jacket" data-price="20" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/ski-jacket.jpg" alt="Ski jacket" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Ski Jacket</h3>
             <p class="item-price">20 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-jacket" role="dialog" aria-modal="true" aria-labelledby="config-jacket-title">
+            <div class="item-config-head">
+              <h4 id="config-jacket-title">Ski Jacket</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="jacket-size">Size</label>
               <select id="jacket-size" class="option-select">
@@ -396,24 +512,35 @@
                 <option>L</option><option>XL</option><option>XXL</option>
               </select>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-jacket">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-jacket" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-jacket">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-jacket" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
-        <article class="item-card item-card-config" data-name="Ski Trousers" data-price="20" data-unit="GEL/day">
+        <article class="item-card" data-name="Ski Trousers" data-price="20" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/ski-trousers.jpg" alt="Ski trousers" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Ski Trousers</h3>
             <p class="item-price">20 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-trousers" role="dialog" aria-modal="true" aria-labelledby="config-trousers-title">
+            <div class="item-config-head">
+              <h4 id="config-trousers-title">Ski Trousers</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="trousers-size">Size</label>
               <select id="trousers-size" class="option-select">
@@ -421,24 +548,35 @@
                 <option>L</option><option>XL</option><option>XXL</option>
               </select>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-trousers">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-trousers" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-trousers">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-trousers" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
-        <article class="item-card item-card-config" data-name="Fleece" data-price="10" data-unit="GEL/day">
+        <article class="item-card" data-name="Fleece" data-price="10" data-unit="GEL/day">
           <div class="item-media">
             <img src="images/fleece.jpg" alt="Fleece pullover" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
           </div>
-          <div class="item-body">
+          <div class="item-face">
             <h3>Fleece</h3>
             <p class="item-price">10 <span>GEL/day</span></p>
+            <button type="button" class="item-trigger-btn">
+              <span>Add to cart</span>
+              <span class="item-trigger-badge" hidden>0</span>
+            </button>
+          </div>
+          <div class="item-config" id="config-fleece" role="dialog" aria-modal="true" aria-labelledby="config-fleece-title">
+            <div class="item-config-head">
+              <h4 id="config-fleece-title">Fleece</h4>
+              <button type="button" class="item-config-close" aria-label="Close">×</button>
+            </div>
             <div class="option-row">
               <label for="fleece-size">Size</label>
               <select id="fleece-size" class="option-select">
@@ -446,14 +584,15 @@
                 <option>L</option><option>XL</option><option>XXL</option>
               </select>
             </div>
-          </div>
-          <div class="item-controls">
-            <label class="qty-label" for="qty-fleece">Qty</label>
-            <div class="stepper">
-              <button type="button" class="step-btn" data-step="-1">–</button>
-              <input type="number" id="qty-fleece" class="qty-input" value="0" min="0" max="10" readonly>
-              <button type="button" class="step-btn" data-step="1">+</button>
+            <div class="item-controls">
+              <label class="qty-label" for="qty-fleece">Qty</label>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="-1">–</button>
+                <input type="number" id="qty-fleece" class="qty-input" value="0" min="0" max="10" readonly>
+                <button type="button" class="step-btn" data-step="1">+</button>
+              </div>
             </div>
+            <button type="button" class="btn btn-primary btn-block item-config-done">Done</button>
           </div>
         </article>
 
@@ -514,6 +653,8 @@
   </aside>
 </main>
 
+<div class="item-modal-backdrop" id="item-modal-backdrop"></div>
+
 <div class="confirm-overlay" id="confirm-overlay">
   <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
     <svg class="confirm-check" viewBox="0 0 52 52" aria-hidden="true"><path d="M14 27 L22 35 L38 17" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -534,6 +675,7 @@
 <script type="module" src="index-auth.js"></script>
 <script type="module" src="orders.js"></script>
 <script src="script.js"></script>
+<script src="item-modal.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="hero-parallax.js"></script>
