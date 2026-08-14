@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kazbegi Gear — Ski &amp; Snowboard Rental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="30" height="30">
+          <path d="M4 30 L14 12 L20 22 L25 14 L36 30 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">Kazbegi Gear</span>
+    </div>
+    <nav class="header-nav">
+      <a href="#catalog">Gear</a>
+      <a href="#ticket">Your Ticket</a>
+    </nav>
+    <div class="header-loc">Gudauri Base Camp</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <p class="hero-eyebrow">Season rental · Gudauri, Georgia</p>
+    <h1>Gear up for the<br>mountain, by the day.</h1>
+    <p class="hero-sub">Pick your kit below — helmets to jackets — set your sizes, and we'll have it waiting at the base. Prices in Georgian Lari, per day.</p>
+    <a href="#catalog" class="btn btn-primary">Browse gear</a>
+  </div>
+  <svg class="hero-contours" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,220 C150,180 300,260 450,210 C600,160 750,240 900,190 C1050,150 1150,200 1200,180 L1200,300 L0,300 Z" />
+    <path d="M0,250 C180,210 320,280 480,240 C650,200 800,260 950,220 C1080,190 1150,230 1200,215 L1200,300 L0,300 Z" opacity="0.6"/>
+  </svg>
+</section>
+
+<main class="wrap main-grid" id="catalog">
+  <div class="catalog-col">
+
+    <section class="category" aria-labelledby="cat-accessories">
+      <div class="category-head">
+        <h2 id="cat-accessories"><span class="cat-index">01</span> Accessories</h2>
+        <p>Grab-and-go essentials, 5 GEL each per day.</p>
+      </div>
+      <div class="item-grid">
+
+        <article class="item-card" data-name="Helmet" data-price="5" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/helmet.jpg" alt="Ski helmet" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Helmet</h3>
+            <p class="item-price">5 <span>GEL/day</span></p>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-helmet">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-helmet" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card" data-name="Ski Glasses" data-price="5" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/ski-glasses.jpg" alt="Ski goggles" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Ski Glasses</h3>
+            <p class="item-price">5 <span>GEL/day</span></p>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-glasses">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-glasses" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card" data-name="Balaklava" data-price="5" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/balaclava.jpg" alt="Balaclava" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Balaklava</h3>
+            <p class="item-price">5 <span>GEL/day</span></p>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-balaklava">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-balaklava" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-skis">
+      <div class="category-head">
+        <h2 id="cat-skis"><span class="cat-index">02</span> Skis</h2>
+        <p>Any pair, 30 GEL per day — choose your ski length.</p>
+      </div>
+      <div class="item-grid item-grid-wide">
+
+        <article class="item-card item-card-config" data-name="Skis" data-price="30" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/skis.jpg" alt="Pair of skis" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Skis</h3>
+            <p class="item-price">30 <span>GEL/day</span></p>
+            <div class="option-row">
+              <label for="ski-size">Ski length</label>
+              <select id="ski-size" class="option-select">
+                <option value="120cm">120 cm</option>
+                <option value="140cm">140 cm</option>
+                <option value="150cm">150 cm</option>
+                <option value="160cm" selected>160 cm</option>
+                <option value="170cm">170 cm</option>
+                <option value="180cm">180 cm</option>
+                <option value="190cm">190 cm</option>
+              </select>
+            </div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-skis">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-skis" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card item-card-config" data-name="Ski Sticks" data-price="10" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/ski-poles.jpg" alt="Ski sticks" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Ski Sticks</h3>
+            <p class="item-price">10 <span>GEL/day</span></p>
+            <div class="option-row">
+              <label for="stick-height">Stick height</label>
+              <select id="stick-height" class="option-select">
+                <option value="90cm">90 cm</option>
+                <option value="100cm">100 cm</option>
+                <option value="110cm">110 cm</option>
+                <option value="120cm" selected>120 cm</option>
+                <option value="130cm">130 cm</option>
+              </select>
+            </div>
+            <div class="option-row option-row-toggle">
+              <label for="stick-curved">Curved shaft</label>
+              <label class="switch">
+                <input type="checkbox" id="stick-curved">
+                <span class="switch-track" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-sticks">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-sticks" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-snowboards">
+      <div class="category-head">
+        <h2 id="cat-snowboards"><span class="cat-index">03</span> Snowboards</h2>
+        <p>Any board, 30 GEL per day.</p>
+      </div>
+      <div class="item-grid">
+
+        <article class="item-card" data-name="Snowboard" data-price="30" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/snowboard.jpg" alt="Snowboard" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Snowboard</h3>
+            <p class="item-price">30 <span>GEL/day</span></p>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-snowboard">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-snowboard" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-footwear">
+      <div class="category-head">
+        <h2 id="cat-footwear"><span class="cat-index">04</span> Footwear</h2>
+        <p>Boots fitted to your shoe size, 20 GEL per day.</p>
+      </div>
+      <div class="item-grid item-grid-wide">
+
+        <article class="item-card item-card-config" data-name="Ski Boots" data-price="20" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/ski-boots.jpg" alt="Ski boots" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Ski Boots</h3>
+            <p class="item-price">20 <span>GEL/day</span></p>
+            <div class="option-row">
+              <label for="ski-boot-size">EU shoe size</label>
+              <select id="ski-boot-size" class="option-select">
+                <option>36</option><option>37</option><option>38</option><option>39</option>
+                <option selected>40</option><option>41</option><option>42</option><option>43</option>
+                <option>44</option><option>45</option><option>46</option><option>47</option>
+              </select>
+            </div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-skiboots">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-skiboots" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card item-card-config" data-name="Snowboard Boots" data-price="20" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/snowboard-boots.jpg" alt="Snowboard boots" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Snowboard Boots</h3>
+            <p class="item-price">20 <span>GEL/day</span></p>
+            <div class="option-row">
+              <label for="snb-boot-size">EU shoe size</label>
+              <select id="snb-boot-size" class="option-select">
+                <option>36</option><option>37</option><option>38</option><option>39</option>
+                <option selected>40</option><option>41</option><option>42</option><option>43</option>
+                <option>44</option><option>45</option><option>46</option><option>47</option>
+              </select>
+            </div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-snbboots">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-snbboots" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-clothing">
+      <div class="category-head">
+        <h2 id="cat-clothing"><span class="cat-index">05</span> Clothing</h2>
+        <p>Shell layers, sized to fit.</p>
+      </div>
+      <div class="item-grid item-grid-wide">
+
+        <article class="item-card item-card-config" data-name="Ski Jacket" data-price="20" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/ski-jacket.jpg" alt="Ski jacket" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Ski Jacket</h3>
+            <p class="item-price">20 <span>GEL/day</span></p>
+            <div class="option-row">
+              <label for="jacket-size">Size</label>
+              <select id="jacket-size" class="option-select">
+                <option>XS</option><option>S</option><option selected>M</option>
+                <option>L</option><option>XL</option><option>XXL</option>
+              </select>
+            </div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-jacket">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-jacket" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card item-card-config" data-name="Ski Trousers" data-price="20" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/ski-trousers.jpg" alt="Ski trousers" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Ski Trousers</h3>
+            <p class="item-price">20 <span>GEL/day</span></p>
+            <div class="option-row">
+              <label for="trousers-size">Size</label>
+              <select id="trousers-size" class="option-select">
+                <option>XS</option><option>S</option><option selected>M</option>
+                <option>L</option><option>XL</option><option>XXL</option>
+              </select>
+            </div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-trousers">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-trousers" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="item-card item-card-config" data-name="Fleece" data-price="10" data-unit="GEL/day">
+          <div class="item-media">
+            <img src="images/fleece.jpg" alt="Fleece pullover" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+          </div>
+          <div class="item-body">
+            <h3>Fleece</h3>
+            <p class="item-price">10 <span>GEL/day</span></p>
+            <div class="option-row">
+              <label for="fleece-size">Size</label>
+              <select id="fleece-size" class="option-select">
+                <option>XS</option><option>S</option><option selected>M</option>
+                <option>L</option><option>XL</option><option>XXL</option>
+              </select>
+            </div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label" for="qty-fleece">Qty</label>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-step="-1">–</button>
+              <input type="number" id="qty-fleece" class="qty-input" value="0" min="0" max="10" readonly>
+              <button type="button" class="step-btn" data-step="1">+</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </div>
+
+  <aside class="ticket-col" id="ticket">
+    <div class="lift-ticket">
+      <div class="ticket-top">
+        <p class="ticket-eyebrow">Kazbegi Gear</p>
+        <h2>Rental Ticket</h2>
+        <div class="ticket-days">
+          <label for="rental-days">Days</label>
+          <div class="stepper stepper-days">
+            <button type="button" class="step-btn" data-days-step="-1">–</button>
+            <input type="number" id="rental-days" class="qty-input" value="1" min="1" max="30" readonly>
+            <button type="button" class="step-btn" data-days-step="1">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-perf" aria-hidden="true"></div>
+
+      <div class="ticket-lines" id="ticket-lines">
+        <p class="ticket-empty">No gear selected yet. Add items from the list.</p>
+      </div>
+
+      <div class="ticket-perf" aria-hidden="true"></div>
+
+      <div class="ticket-total">
+        <span>Total</span>
+        <span id="ticket-total-amount">0 GEL</span>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block" id="reserve-btn" disabled>Reserve this gear</button>
+      <p class="ticket-note">Pay at pickup, base camp desk. No card details needed online.</p>
+    </div>
+  </aside>
+</main>
+
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <svg class="confirm-check" viewBox="0 0 52 52" aria-hidden="true"><path d="M14 27 L22 35 L38 17" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h3 id="confirm-title">Reservation held</h3>
+    <p id="confirm-summary"></p>
+    <p class="confirm-sub">Bring ID to the base camp desk to collect your gear and pay for your stay.</p>
+    <button type="button" class="btn btn-primary" id="confirm-close">Done</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Kazbegi Gear · Gudauri Base Camp</span>
+    <span>Open daily, 08:00–19:00, in season</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
