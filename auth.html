@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — Kazbegi Gear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="30" height="30">
+          <path d="M4 30 L14 12 L20 22 L25 14 L36 30 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">Kazbegi Gear</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html#catalog">Gear</a>
+    </nav>
+    <div class="header-auth" id="header-auth"></div>
+  </div>
+</header>
+
+<main class="wrap auth-wrap">
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab is-active" id="tab-signin" data-tab="signin">Sign In</button>
+      <button type="button" class="auth-tab" id="tab-signup" data-tab="signup">Register</button>
+    </div>
+
+    <form id="signin-form" class="auth-form" novalidate>
+      <p class="auth-error" id="signin-error" hidden></p>
+      <div class="field">
+        <label for="signin-email">Email</label>
+        <input type="email" id="signin-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="signin-password">Password</label>
+        <input type="password" id="signin-password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="signin-submit">Sign In</button>
+    </form>
+
+    <form id="signup-form" class="auth-form" novalidate hidden>
+      <p class="auth-error" id="signup-error" hidden></p>
+      <div class="field-row">
+        <div class="field">
+          <label for="signup-firstname">First name</label>
+          <input type="text" id="signup-firstname" required autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label for="signup-lastname">Surname</label>
+          <input type="text" id="signup-lastname" required autocomplete="family-name">
+        </div>
+      </div>
+      <div class="field">
+        <label for="signup-phone">Phone number</label>
+        <input type="tel" id="signup-phone" required autocomplete="tel" placeholder="+995 5xx xx xx xx">
+      </div>
+      <div class="field">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" required autocomplete="email">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required autocomplete="new-password" minlength="6">
+        </div>
+        <div class="field">
+          <label for="signup-password2">Confirm password</label>
+          <input type="password" id="signup-password2" required autocomplete="new-password" minlength="6">
+        </div>
+      </div>
+
+      <div class="consent-box">
+        <p><strong>Before you register:</strong> Kazbegi Gear staff can see the information you provide here — your name, phone number, and email — to identify you and process your rental. It is not sold or shared outside the shop.</p>
+        <label class="consent-check">
+          <input type="checkbox" id="signup-consent">
+          <span>I understand my data can be seen by Kazbegi Gear, and I agree to that.</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" id="signup-submit" disabled>Create account</button>
+    </form>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Kazbegi Gear · Gudauri Base Camp</span>
+    <span>Open daily, 08:00–19:00, in season</span>
+  </div>
+</footer>
+
+<script type="module" src="auth.js"></script>
+</body>
+</html>

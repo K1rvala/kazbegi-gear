@@ -26,6 +26,7 @@
       <a href="#ticket">Your Ticket</a>
     </nav>
     <div class="header-loc">Gudauri Base Camp</div>
+    <div class="header-auth" id="header-auth"></div>
   </div>
 </header>
 
@@ -389,8 +390,26 @@
         <span id="ticket-total-amount">0 GEL</span>
       </div>
 
-      <button type="button" class="btn btn-primary btn-block" id="reserve-btn" disabled>Reserve this gear</button>
-      <p class="ticket-note">Pay at pickup, base camp desk. No card details needed online.</p>
+      <div class="ticket-auth-gate" id="ticket-auth-gate" hidden>
+        <p class="ticket-auth-message">Sign in to reserve your gear.</p>
+        <a href="auth.html" class="btn btn-primary btn-block">Sign In / Register</a>
+      </div>
+
+      <div class="ticket-checkout" id="ticket-checkout">
+        <div class="payment-methods">
+          <p class="payment-methods-label">Payment method</p>
+          <label class="payment-option">
+            <input type="radio" name="payment-method" value="cashier" checked>
+            <span>Cash or card at cashier</span>
+          </label>
+          <label class="payment-option payment-option-disabled">
+            <input type="radio" name="payment-method" value="online" disabled>
+            <span>Card online <em>Coming soon</em></span>
+          </label>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" id="reserve-btn" disabled>Reserve this gear</button>
+        <p class="ticket-note">Pay at pickup, base camp desk — unless you choose card online.</p>
+      </div>
     </div>
   </aside>
 </main>
@@ -412,6 +431,7 @@
   </div>
 </footer>
 
+<script type="module" src="index-auth.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

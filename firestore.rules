@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+
+      // A signed-in user may create their own profile document once, at signup.
+      // Only the designated admin email is allowed to create itself with role "admin" —
+      // everyone else is forced to role "user", even if the client tries to send otherwise.
+      allow create: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.consentAccepted == true
+                    && (
+                         request.resource.data.role == 'user'
+                         || (request.resource.data.role == 'admin'
+                             && request.auth.token.email == 'kkirvalidzee@gmail.com')
+                       );
+
+      // A user can always read their own profile.
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // A user can update their own profile, but can never change their own role.
+      allow update: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.role == resource.data.role;
+
+      // Admins (identified by their own profile's role field) can read every profile.
+      allow read: if request.auth != null &&
+                  get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+
+      allow delete: if false;
+    }
+  }
+}

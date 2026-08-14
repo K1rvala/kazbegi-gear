@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Kazbegi Gear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="30" height="30">
+          <path d="M4 30 L14 12 L20 22 L25 14 L36 30 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">Kazbegi Gear</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html#catalog">Gear</a>
+    </nav>
+    <div class="header-auth" id="header-auth"></div>
+  </div>
+</header>
+
+<main class="wrap admin-wrap">
+  <p id="admin-status" class="admin-status">Checking your access…</p>
+
+  <div id="admin-content" hidden>
+    <div class="admin-head">
+      <h1>Registered users</h1>
+      <p id="admin-count" class="admin-count"></p>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Registered</th>
+            <th>Consent</th>
+          </tr>
+        </thead>
+        <tbody id="admin-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Kazbegi Gear · Gudauri Base Camp</span>
+    <span>Open daily, 08:00–19:00, in season</span>
+  </div>
+</footer>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>

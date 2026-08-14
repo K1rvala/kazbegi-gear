@@ -114,6 +114,11 @@
   }
 
   reserveBtn.addEventListener("click", () => {
+    if (!window.__currentUserProfile) {
+      location.href = "auth.html";
+      return;
+    }
+
     const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
     const items = itemCards
       .map((card) => {
@@ -122,7 +127,12 @@
       })
       .filter(Boolean);
 
-    confirmSummary.textContent = `${items.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${ticketTotalAmount.textContent}.`;
+    const paymentInput = document.querySelector('input[name="payment-method"]:checked');
+    const paymentLabel = paymentInput && paymentInput.value === "online" ? "Card online" : "Cash or card at cashier";
+    const profile = window.__currentUserProfile;
+    const greeting = profile ? `${profile.firstName} ${profile.lastName} — ` : "";
+
+    confirmSummary.textContent = `${greeting}${items.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${ticketTotalAmount.textContent}. Payment: ${paymentLabel}.`;
     confirmOverlay.classList.add("is-open");
   });
 
