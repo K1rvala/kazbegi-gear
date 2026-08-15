@@ -20,12 +20,28 @@ const emailLabelEl = document.getElementById("reset-email-label");
 const form = document.getElementById("reset-form");
 const errorEl = document.getElementById("reset-error");
 
+const SUCCESS_KEY = "kazbegi-reset-success-code";
+
 function showInvalid() {
   checkingEl.hidden = true;
   invalidEl.hidden = false;
 }
 
+function showSuccess() {
+  checkingEl.hidden = true;
+  formWrapEl.hidden = true;
+  successEl.hidden = false;
+}
+
 async function init() {
+  // If this exact link already succeeded once in this browser (e.g. the page
+  // was reloaded, or the same email link was opened a second time), the
+  // reset code is now used up - show success again instead of "expired".
+  if (oobCode && sessionStorage.getItem(SUCCESS_KEY) === oobCode) {
+    showSuccess();
+    return;
+  }
+
   if (mode !== "resetPassword" || !oobCode) {
     showInvalid();
     return;
@@ -58,8 +74,8 @@ form.addEventListener("submit", async (e) => {
 
   try {
     await confirmPasswordReset(auth, oobCode, password);
-    formWrapEl.hidden = true;
-    successEl.hidden = false;
+    sessionStorage.setItem(SUCCESS_KEY, oobCode);
+    showSuccess();
   } catch (err) {
     const code = err && err.code;
     const map = {
