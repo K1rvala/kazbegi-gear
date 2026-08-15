@@ -10,6 +10,9 @@
   const confirmSummary = document.getElementById("confirm-summary");
   const confirmClose = document.getElementById("confirm-close");
 
+  let cart = [];
+  let nextLineId = 1;
+
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
   }
@@ -17,34 +20,8 @@
   function stepQty(input, delta, min, max) {
     const next = clamp(parseInt(input.value, 10) + delta, min, max);
     input.value = next;
-    render();
+    return next;
   }
-
-  itemCards.forEach((card) => {
-    const qtyInput = card.querySelector(".qty-input");
-    card.querySelectorAll(".step-btn[data-step]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        stepQty(qtyInput, parseInt(btn.dataset.step, 10), 0, 10);
-      });
-    });
-    card.querySelectorAll(".option-select, .switch input").forEach((el) => {
-      el.addEventListener("change", render);
-    });
-  });
-
-  document.querySelectorAll(".stepper-days .step-btn[data-days-step]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      stepQty(daysInput, parseInt(btn.dataset.daysStep, 10), 1, 30);
-    });
-  });
-
-  ticketLines.addEventListener("click", (e) => {
-    const btn = e.target.closest(".step-btn[data-ticket-target]");
-    if (!btn) return;
-    const target = document.getElementById(btn.dataset.ticketTarget);
-    if (!target) return;
-    stepQty(target, parseInt(btn.dataset.ticketStep, 10), 0, 10);
-  });
 
   function describeOptions(card) {
     const parts = [];
@@ -60,53 +37,112 @@
     return parts.join(" · ");
   }
 
-  function render() {
-    const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
-    let grandTotal = 0;
-    let anyQty = false;
-    const lineEls = [];
-
+  function updateBadges() {
     itemCards.forEach((card) => {
-      const qty = parseInt(card.querySelector(".qty-input").value, 10) || 0;
-
+      const name = card.dataset.name;
+      const total = cart.filter((line) => line.name === name).reduce((sum, line) => sum + line.qty, 0);
       const badge = card.querySelector(".item-trigger-badge");
       if (badge) {
-        badge.textContent = qty;
-        badge.hidden = qty <= 0;
+        badge.textContent = total;
+        badge.hidden = total <= 0;
       }
+    });
+  }
 
-      if (qty <= 0) return;
-      anyQty = true;
+  // Per-card staging controls: the qty stepper inside each popup only tracks
+  // "how many of this exact configuration to add" until "Add to cart" is pressed.
+  itemCards.forEach((card) => {
+    const qtyInput = card.querySelector(".qty-input");
+    const addBtn = card.querySelector(".item-config-done");
 
-      const name = card.dataset.name;
-      const price = parseFloat(card.dataset.price);
-      const lineTotal = price * qty * days;
+    function syncAddBtn() {
+      if (addBtn) addBtn.disabled = (parseInt(qtyInput.value, 10) || 0) <= 0;
+    }
+
+    card.querySelectorAll(".step-btn[data-step]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        stepQty(qtyInput, parseInt(btn.dataset.step, 10), 0, 10);
+        syncAddBtn();
+      });
+    });
+
+    if (addBtn) {
+      addBtn.addEventListener("click", () => {
+        const qty = parseInt(qtyInput.value, 10) || 0;
+        if (qty <= 0) return;
+
+        const name = card.dataset.name;
+        const price = parseFloat(card.dataset.price);
+        const optionsText = describeOptions(card);
+
+        const existing = cart.find((line) => line.name === name && line.optionsText === optionsText);
+        if (existing) {
+          existing.qty += qty;
+        } else {
+          cart.push({ id: nextLineId++, name, price, optionsText, qty });
+        }
+
+        qtyInput.value = 0;
+        syncAddBtn();
+        updateBadges();
+        renderCart();
+      });
+    }
+  });
+
+  document.querySelectorAll(".stepper-days .step-btn[data-days-step]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      stepQty(daysInput, parseInt(btn.dataset.daysStep, 10), 1, 30);
+      renderCart();
+    });
+  });
+
+  ticketLines.addEventListener("click", (e) => {
+    const btn = e.target.closest(".step-btn[data-ticket-line]");
+    if (!btn) return;
+    const lineId = parseInt(btn.dataset.ticketLine, 10);
+    const step = parseInt(btn.dataset.ticketStep, 10);
+    const line = cart.find((l) => l.id === lineId);
+    if (!line) return;
+
+    line.qty = clamp(line.qty + step, 0, 10);
+    if (line.qty <= 0) {
+      cart = cart.filter((l) => l.id !== lineId);
+    }
+    updateBadges();
+    renderCart();
+  });
+
+  function renderCart() {
+    const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
+    let grandTotal = 0;
+    const lineEls = [];
+
+    cart.forEach((line) => {
+      const lineTotal = line.price * line.qty * days;
       grandTotal += lineTotal;
 
-      const optionsText = describeOptions(card);
-      const qtyInputId = card.querySelector(".qty-input").id;
-
-      const line = document.createElement("div");
-      line.className = "ticket-line";
-      line.innerHTML = `
+      const el = document.createElement("div");
+      el.className = "ticket-line";
+      el.innerHTML = `
         <div class="ticket-line-top">
-          <span class="ticket-line-name">${name}</span>
+          <span class="ticket-line-name">${line.name}</span>
           <span class="ticket-line-amount">${lineTotal} GEL</span>
         </div>
         <div class="ticket-line-bottom">
-          <span class="ticket-line-meta">${optionsText || `${price} GEL/day`}</span>
+          <span class="ticket-line-meta">${line.optionsText || `${line.price} GEL/day`}</span>
           <div class="stepper stepper-sm">
-            <button type="button" class="step-btn" data-ticket-target="${qtyInputId}" data-ticket-step="-1">–</button>
-            <span class="ticket-line-qty">${qty}</span>
-            <button type="button" class="step-btn" data-ticket-target="${qtyInputId}" data-ticket-step="1">+</button>
+            <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="-1">–</button>
+            <span class="ticket-line-qty">${line.qty}</span>
+            <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="1">+</button>
           </div>
         </div>
       `;
-      lineEls.push(line);
+      lineEls.push(el);
     });
 
     ticketLines.innerHTML = "";
-    if (!anyQty) {
+    if (cart.length === 0) {
       const empty = document.createElement("p");
       empty.className = "ticket-empty";
       empty.textContent = "No gear selected yet. Add items from the list.";
@@ -116,7 +152,7 @@
     }
 
     ticketTotalAmount.textContent = `${grandTotal} GEL`;
-    reserveBtn.disabled = !anyQty;
+    reserveBtn.disabled = cart.length === 0;
   }
 
   reserveBtn.addEventListener("click", async () => {
@@ -127,28 +163,20 @@
     if (reserveBtn.disabled) return;
 
     const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
-    const orderItems = [];
-    const summaryParts = [];
-
-    itemCards.forEach((card) => {
-      const qty = parseInt(card.querySelector(".qty-input").value, 10) || 0;
-      if (qty <= 0) return;
-      const name = card.dataset.name;
-      const price = parseFloat(card.dataset.price);
-      orderItems.push({
-        name,
-        qty,
-        price,
-        options: describeOptions(card),
-        lineTotal: price * qty * days,
-      });
-      summaryParts.push(`${qty} × ${name}`);
-    });
+    const orderItems = cart.map((line) => ({
+      name: line.name,
+      qty: line.qty,
+      price: line.price,
+      options: line.optionsText,
+      lineTotal: line.price * line.qty * days,
+    }));
+    const summaryParts = cart.map(
+      (line) => `${line.qty} × ${line.name}${line.optionsText ? ` (${line.optionsText})` : ""}`
+    );
 
     const paymentInput = document.querySelector('input[name="payment-method"]:checked');
     const paymentMethod = paymentInput ? paymentInput.value : "cashier";
     const paymentLabel = paymentMethod === "online" ? "Card online" : "Cash or card at cashier";
-    const total = parseFloat(ticketTotalAmount.textContent) || 0;
     const totalLabel = ticketTotalAmount.textContent;
     const profile = window.__currentUserProfile;
     const greeting = profile ? `${profile.firstName} ${profile.lastName} — ` : "";
@@ -156,19 +184,18 @@
     reserveBtn.disabled = true;
     try {
       if (typeof window.saveOrder !== "function") throw new Error("Order system not ready");
-      await window.saveOrder({ items: orderItems, days, paymentMethod, total });
+      await window.saveOrder({ items: orderItems, days, paymentMethod, total: parseFloat(totalLabel) || 0 });
 
-      itemCards.forEach((card) => {
-        card.querySelector(".qty-input").value = 0;
-      });
+      cart = [];
       daysInput.value = 1;
-      render();
+      updateBadges();
+      renderCart();
 
       confirmSummary.textContent = `${greeting}${summaryParts.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${totalLabel}. Payment: ${paymentLabel}.`;
       confirmOverlay.classList.add("is-open");
     } catch (err) {
       console.error(err);
-      render();
+      renderCart();
       alert("Something went wrong placing your reservation. Please try again.");
     }
   });
@@ -180,5 +207,6 @@
     if (e.target === confirmOverlay) confirmOverlay.classList.remove("is-open");
   });
 
-  render();
+  updateBadges();
+  renderCart();
 })();

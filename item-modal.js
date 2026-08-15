@@ -19,6 +19,14 @@
     if (openConfig && openConfig !== config) {
       openConfig.classList.remove("is-open");
     }
+
+    const qtyInput = config.querySelector(".qty-input");
+    const addBtn = config.querySelector(".item-config-done");
+    if (qtyInput) {
+      qtyInput.value = 1;
+      if (addBtn) addBtn.disabled = false;
+    }
+
     config.classList.add("is-open");
     backdrop.classList.add("is-open");
     openConfig = config;
