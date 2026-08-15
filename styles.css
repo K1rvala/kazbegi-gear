@@ -540,6 +540,12 @@ button{font-family:inherit;}
   font-weight:600; font-size:13px;
   color:var(--ink);
 }
+.ticket-line-discount{
+  padding-top:4px;
+}
+.ticket-line-discount .ticket-line-name{ color:var(--amber-dark); }
+.ticket-line-discount .ticket-line-amount{ color:var(--amber-dark); }
+.ticket-line-discount .ticket-line-bottom{ justify-content:flex-start; }
 
 .ticket-total{
   display:flex; justify-content:space-between; align-items:baseline;
@@ -629,6 +635,17 @@ button{font-family:inherit;}
 }
 .confirm-card h3{ font-size:21px; margin-bottom:10px; }
 .confirm-card p{ font-size:14px; color:var(--ink-soft); margin-bottom:6px; }
+.confirm-order-code{
+  display:inline-block;
+  font-family:var(--font-body);
+  font-weight:700; font-size:13px;
+  letter-spacing:0.03em;
+  color:var(--amber-dark);
+  background:var(--amber-tint);
+  border-radius:999px;
+  padding:5px 14px;
+  margin:0 auto 14px !important;
+}
 .confirm-sub{ margin-bottom:22px !important; font-size:13px !important; }
 
 /* ---- footer ---- */
@@ -782,6 +799,15 @@ button{font-family:inherit;}
 }
 .role-user{ background:var(--snow-dim); color:var(--ink-soft); }
 .role-admin{ background:var(--amber-tint); color:var(--amber-dark); }
+.order-code{
+  font-weight:700; font-size:12.5px;
+  letter-spacing:0.02em;
+  color:var(--pine-800);
+}
+.order-discount-note{
+  font-size:11px; font-weight:600;
+  color:var(--amber-dark);
+}
 .admin-head-orders{ margin-top:40px; }
 .admin-cell-wrap{ white-space:normal; min-width:220px; }
 

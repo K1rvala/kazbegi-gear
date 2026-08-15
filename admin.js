@@ -88,14 +88,18 @@ watchAuth(async (state) => {
           .map((i) => `${i.qty} × ${escapeHtml(i.name)}${i.options ? ` (${escapeHtml(i.options)})` : ""}`)
           .join(", ");
         const paymentLabel = o.paymentMethod === "online" ? "Card online" : "Cash / card at cashier";
+        const discountNote = o.discount
+          ? `<br><span class="order-discount-note">−${o.discount.amount} GEL (${o.discount.fullSets} full ${o.discount.fullSets === 1 ? "set" : "sets"})</span>`
+          : "";
         return `
       <tr>
+        <td><span class="order-code">${escapeHtml(o.orderCode || "—")}</span></td>
         <td>${escapeHtml(o.customerName)}</td>
         <td>${escapeHtml(o.customerPhone)}</td>
         <td class="admin-cell-wrap">${itemsText}</td>
         <td>${o.days}</td>
         <td>${paymentLabel}</td>
-        <td>${o.total} GEL</td>
+        <td>${o.total} GEL${discountNote}</td>
         <td>${formatDate(o.createdAt)}</td>
       </tr>
     `;

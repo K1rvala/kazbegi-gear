@@ -7,11 +7,13 @@
   const ticketTotalAmount = document.getElementById("ticket-total-amount");
   const reserveBtn = document.getElementById("reserve-btn");
   const confirmOverlay = document.getElementById("confirm-overlay");
+  const confirmOrderCode = document.getElementById("confirm-order-code");
   const confirmSummary = document.getElementById("confirm-summary");
   const confirmClose = document.getElementById("confirm-close");
 
   let cart = [];
   let nextLineId = 1;
+  const FULL_SET_PRICE = 50;
 
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
@@ -113,6 +115,51 @@
     renderCart();
   });
 
+  // A "full set" is skis+ski boots+glasses+helmet (or the snowboard
+  // equivalent), discounted to a flat FULL_SET_PRICE per day. Quantities are
+  // matched up so multiple complete sets each get the discount, while any
+  // unmatched leftover items still price normally.
+  function computeFullSetDiscount(days) {
+    function qtyOf(name) {
+      return cart.filter((line) => line.name === name).reduce((sum, line) => sum + line.qty, 0);
+    }
+    function priceOf(name) {
+      const line = cart.find((l) => l.name === name);
+      return line ? line.price : 0;
+    }
+
+    const candidates = [
+      {
+        type: "Ski",
+        pairs: Math.min(qtyOf("Skis"), qtyOf("Ski Boots")),
+        setPrice: priceOf("Skis") + priceOf("Ski Boots") + priceOf("Ski Glasses") + priceOf("Helmet"),
+      },
+      {
+        type: "Snowboard",
+        pairs: Math.min(qtyOf("Snowboard"), qtyOf("Snowboard Boots")),
+        setPrice: priceOf("Snowboard") + priceOf("Snowboard Boots") + priceOf("Ski Glasses") + priceOf("Helmet"),
+      },
+    ].filter((c) => c.pairs > 0);
+
+    let sharedPool = Math.min(qtyOf("Ski Glasses"), qtyOf("Helmet"));
+    candidates.sort((a, b) => (b.setPrice - FULL_SET_PRICE) - (a.setPrice - FULL_SET_PRICE));
+
+    let setCount = 0;
+    let perDaySavings = 0;
+
+    candidates.forEach((c) => {
+      if (sharedPool <= 0) return;
+      const formed = Math.min(c.pairs, sharedPool);
+      if (formed <= 0) return;
+      const saving = Math.max(0, c.setPrice - FULL_SET_PRICE);
+      setCount += formed;
+      perDaySavings += formed * saving;
+      sharedPool -= formed;
+    });
+
+    return { setCount, totalDiscount: perDaySavings * days };
+  }
+
   function renderCart() {
     const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
     let grandTotal = 0;
@@ -141,6 +188,9 @@
       lineEls.push(el);
     });
 
+    const { setCount, totalDiscount } = computeFullSetDiscount(days);
+    grandTotal -= totalDiscount;
+
     ticketLines.innerHTML = "";
     if (cart.length === 0) {
       const empty = document.createElement("p");
@@ -149,6 +199,20 @@
       ticketLines.appendChild(empty);
     } else {
       lineEls.forEach((el) => ticketLines.appendChild(el));
+      if (setCount > 0) {
+        const discountEl = document.createElement("div");
+        discountEl.className = "ticket-line ticket-line-discount";
+        discountEl.innerHTML = `
+          <div class="ticket-line-top">
+            <span class="ticket-line-name">Full set discount</span>
+            <span class="ticket-line-amount">−${totalDiscount} GEL</span>
+          </div>
+          <div class="ticket-line-bottom">
+            <span class="ticket-line-meta">${setCount} full ${setCount === 1 ? "set" : "sets"} at ${FULL_SET_PRICE} GEL/day each</span>
+          </div>
+        `;
+        ticketLines.appendChild(discountEl);
+      }
     }
 
     ticketTotalAmount.textContent = `${grandTotal} GEL`;
@@ -180,18 +244,29 @@
     const totalLabel = ticketTotalAmount.textContent;
     const profile = window.__currentUserProfile;
     const greeting = profile ? `${profile.firstName} ${profile.lastName} — ` : "";
+    const { setCount, totalDiscount } = computeFullSetDiscount(days);
 
     reserveBtn.disabled = true;
     try {
       if (typeof window.saveOrder !== "function") throw new Error("Order system not ready");
-      await window.saveOrder({ items: orderItems, days, paymentMethod, total: parseFloat(totalLabel) || 0 });
+      const { orderCode } = await window.saveOrder({
+        items: orderItems,
+        days,
+        paymentMethod,
+        total: parseFloat(totalLabel) || 0,
+        discount: setCount > 0 ? { fullSets: setCount, amount: totalDiscount } : null,
+      });
 
       cart = [];
       daysInput.value = 1;
       updateBadges();
       renderCart();
 
-      confirmSummary.textContent = `${greeting}${summaryParts.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${totalLabel}. Payment: ${paymentLabel}.`;
+      const discountNote =
+        setCount > 0 ? ` Full set discount applied (${setCount} ${setCount === 1 ? "set" : "sets"}, −${totalDiscount} GEL).` : "";
+
+      confirmOrderCode.textContent = orderCode ? `Order ${orderCode}` : "";
+      confirmSummary.textContent = `${greeting}${summaryParts.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${totalLabel}.${discountNote} Payment: ${paymentLabel}.`;
       confirmOverlay.classList.add("is-open");
     } catch (err) {
       console.error(err);
