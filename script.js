@@ -2,28 +2,6 @@
   "use strict";
 
   const itemCards = Array.from(document.querySelectorAll(".item-card"));
-  const daysInput = document.getElementById("rental-days");
-  const ticketLines = document.getElementById("ticket-lines");
-  const ticketTotalAmount = document.getElementById("ticket-total-amount");
-  const reserveBtn = document.getElementById("reserve-btn");
-  const confirmOverlay = document.getElementById("confirm-overlay");
-  const confirmOrderCode = document.getElementById("confirm-order-code");
-  const confirmSummary = document.getElementById("confirm-summary");
-  const confirmClose = document.getElementById("confirm-close");
-
-  let cart = [];
-  let nextLineId = 1;
-  const FULL_SET_PRICE = 50;
-
-  function clamp(n, min, max) {
-    return Math.min(max, Math.max(min, n));
-  }
-
-  function stepQty(input, delta, min, max) {
-    const next = clamp(parseInt(input.value, 10) + delta, min, max);
-    input.value = next;
-    return next;
-  }
 
   function describeOptions(card) {
     const parts = [];
@@ -42,7 +20,7 @@
   function updateBadges() {
     itemCards.forEach((card) => {
       const name = card.dataset.name;
-      const total = cart.filter((line) => line.name === name).reduce((sum, line) => sum + line.qty, 0);
+      const total = window.CartStore.getCountForName(name);
       const badge = card.querySelector(".item-trigger-badge");
       if (badge) {
         badge.textContent = total;
@@ -63,7 +41,9 @@
 
     card.querySelectorAll(".step-btn[data-step]").forEach((btn) => {
       btn.addEventListener("click", () => {
-        stepQty(qtyInput, parseInt(btn.dataset.step, 10), 0, 10);
+        const delta = parseInt(btn.dataset.step, 10);
+        const next = Math.min(10, Math.max(0, (parseInt(qtyInput.value, 10) || 0) + delta));
+        qtyInput.value = next;
         syncAddBtn();
       });
     });
@@ -77,211 +57,15 @@
         const price = parseFloat(card.dataset.price);
         const optionsText = describeOptions(card);
 
-        const existing = cart.find((line) => line.name === name && line.optionsText === optionsText);
-        if (existing) {
-          existing.qty += qty;
-        } else {
-          cart.push({ id: nextLineId++, name, price, optionsText, qty });
-        }
+        window.CartStore.addLine(name, price, optionsText, qty);
 
         qtyInput.value = 0;
         syncAddBtn();
         updateBadges();
-        renderCart();
       });
     }
   });
 
-  document.querySelectorAll(".stepper-days .step-btn[data-days-step]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      stepQty(daysInput, parseInt(btn.dataset.daysStep, 10), 1, 30);
-      renderCart();
-    });
-  });
-
-  ticketLines.addEventListener("click", (e) => {
-    const btn = e.target.closest(".step-btn[data-ticket-line]");
-    if (!btn) return;
-    const lineId = parseInt(btn.dataset.ticketLine, 10);
-    const step = parseInt(btn.dataset.ticketStep, 10);
-    const line = cart.find((l) => l.id === lineId);
-    if (!line) return;
-
-    line.qty = clamp(line.qty + step, 0, 10);
-    if (line.qty <= 0) {
-      cart = cart.filter((l) => l.id !== lineId);
-    }
-    updateBadges();
-    renderCart();
-  });
-
-  // A "full set" is skis+ski boots+glasses+helmet (or the snowboard
-  // equivalent), discounted to a flat FULL_SET_PRICE per day. Quantities are
-  // matched up so multiple complete sets each get the discount, while any
-  // unmatched leftover items still price normally.
-  function computeFullSetDiscount(days) {
-    function qtyOf(name) {
-      return cart.filter((line) => line.name === name).reduce((sum, line) => sum + line.qty, 0);
-    }
-    function priceOf(name) {
-      const line = cart.find((l) => l.name === name);
-      return line ? line.price : 0;
-    }
-
-    const candidates = [
-      {
-        type: "Ski",
-        pairs: Math.min(qtyOf("Skis"), qtyOf("Ski Boots")),
-        setPrice: priceOf("Skis") + priceOf("Ski Boots") + priceOf("Ski Glasses") + priceOf("Helmet"),
-      },
-      {
-        type: "Snowboard",
-        pairs: Math.min(qtyOf("Snowboard"), qtyOf("Snowboard Boots")),
-        setPrice: priceOf("Snowboard") + priceOf("Snowboard Boots") + priceOf("Ski Glasses") + priceOf("Helmet"),
-      },
-    ].filter((c) => c.pairs > 0);
-
-    let sharedPool = Math.min(qtyOf("Ski Glasses"), qtyOf("Helmet"));
-    candidates.sort((a, b) => (b.setPrice - FULL_SET_PRICE) - (a.setPrice - FULL_SET_PRICE));
-
-    let setCount = 0;
-    let perDaySavings = 0;
-
-    candidates.forEach((c) => {
-      if (sharedPool <= 0) return;
-      const formed = Math.min(c.pairs, sharedPool);
-      if (formed <= 0) return;
-      const saving = Math.max(0, c.setPrice - FULL_SET_PRICE);
-      setCount += formed;
-      perDaySavings += formed * saving;
-      sharedPool -= formed;
-    });
-
-    return { setCount, totalDiscount: perDaySavings * days };
-  }
-
-  function renderCart() {
-    const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
-    let grandTotal = 0;
-    const lineEls = [];
-
-    cart.forEach((line) => {
-      const lineTotal = line.price * line.qty * days;
-      grandTotal += lineTotal;
-
-      const el = document.createElement("div");
-      el.className = "ticket-line";
-      el.innerHTML = `
-        <div class="ticket-line-top">
-          <span class="ticket-line-name">${line.name}</span>
-          <span class="ticket-line-amount">${lineTotal} GEL</span>
-        </div>
-        <div class="ticket-line-bottom">
-          <span class="ticket-line-meta">${line.optionsText || `${line.price} GEL/day`}</span>
-          <div class="stepper stepper-sm">
-            <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="-1">–</button>
-            <span class="ticket-line-qty">${line.qty}</span>
-            <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="1">+</button>
-          </div>
-        </div>
-      `;
-      lineEls.push(el);
-    });
-
-    const { setCount, totalDiscount } = computeFullSetDiscount(days);
-    grandTotal -= totalDiscount;
-
-    ticketLines.innerHTML = "";
-    if (cart.length === 0) {
-      const empty = document.createElement("p");
-      empty.className = "ticket-empty";
-      empty.textContent = "No gear selected yet. Add items from the list.";
-      ticketLines.appendChild(empty);
-    } else {
-      lineEls.forEach((el) => ticketLines.appendChild(el));
-      if (setCount > 0) {
-        const discountEl = document.createElement("div");
-        discountEl.className = "ticket-line ticket-line-discount";
-        discountEl.innerHTML = `
-          <div class="ticket-line-top">
-            <span class="ticket-line-name">Full set discount</span>
-            <span class="ticket-line-amount">−${totalDiscount} GEL</span>
-          </div>
-          <div class="ticket-line-bottom">
-            <span class="ticket-line-meta">${setCount} full ${setCount === 1 ? "set" : "sets"} at ${FULL_SET_PRICE} GEL/day each</span>
-          </div>
-        `;
-        ticketLines.appendChild(discountEl);
-      }
-    }
-
-    ticketTotalAmount.textContent = `${grandTotal} GEL`;
-    reserveBtn.disabled = cart.length === 0;
-  }
-
-  reserveBtn.addEventListener("click", async () => {
-    if (!window.__currentUserProfile) {
-      location.href = "signin.html";
-      return;
-    }
-    if (reserveBtn.disabled) return;
-
-    const days = clamp(parseInt(daysInput.value, 10) || 1, 1, 30);
-    const orderItems = cart.map((line) => ({
-      name: line.name,
-      qty: line.qty,
-      price: line.price,
-      options: line.optionsText,
-      lineTotal: line.price * line.qty * days,
-    }));
-    const summaryParts = cart.map(
-      (line) => `${line.qty} × ${line.name}${line.optionsText ? ` (${line.optionsText})` : ""}`
-    );
-
-    const paymentInput = document.querySelector('input[name="payment-method"]:checked');
-    const paymentMethod = paymentInput ? paymentInput.value : "cashier";
-    const paymentLabel = paymentMethod === "online" ? "Card online" : "Cash or card at cashier";
-    const totalLabel = ticketTotalAmount.textContent;
-    const profile = window.__currentUserProfile;
-    const greeting = profile ? `${profile.firstName} ${profile.lastName} — ` : "";
-    const { setCount, totalDiscount } = computeFullSetDiscount(days);
-
-    reserveBtn.disabled = true;
-    try {
-      if (typeof window.saveOrder !== "function") throw new Error("Order system not ready");
-      const { orderCode } = await window.saveOrder({
-        items: orderItems,
-        days,
-        paymentMethod,
-        total: parseFloat(totalLabel) || 0,
-        discount: setCount > 0 ? { fullSets: setCount, amount: totalDiscount } : null,
-      });
-
-      cart = [];
-      daysInput.value = 1;
-      updateBadges();
-      renderCart();
-
-      const discountNote =
-        setCount > 0 ? ` Full set discount applied (${setCount} ${setCount === 1 ? "set" : "sets"}, −${totalDiscount} GEL).` : "";
-
-      confirmOrderCode.textContent = orderCode ? `Order ${orderCode}` : "";
-      confirmSummary.textContent = `${greeting}${summaryParts.join(", ")} for ${days} day${days > 1 ? "s" : ""} — ${totalLabel}.${discountNote} Payment: ${paymentLabel}.`;
-      confirmOverlay.classList.add("is-open");
-    } catch (err) {
-      console.error(err);
-      renderCart();
-      alert("Something went wrong placing your reservation. Please try again.");
-    }
-  });
-
-  confirmClose.addEventListener("click", () => {
-    confirmOverlay.classList.remove("is-open");
-  });
-  confirmOverlay.addEventListener("click", (e) => {
-    if (e.target === confirmOverlay) confirmOverlay.classList.remove("is-open");
-  });
-
+  window.addEventListener("kazbegi-cart-updated", updateBadges);
   updateBadges();
-  renderCart();
 })();
