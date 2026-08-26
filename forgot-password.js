@@ -5,13 +5,17 @@ import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13
 const headerAuth = document.getElementById("header-auth");
 watchAuth((state) => renderHeaderAuth(headerAuth, state));
 
+const headEl = document.getElementById("forgot-head");
 const form = document.getElementById("forgot-form");
 const errorEl = document.getElementById("forgot-error");
 const successEl = document.getElementById("forgot-success");
+const switchEl = document.getElementById("forgot-switch");
 const submitBtn = document.getElementById("forgot-submit");
 
 function showSentState() {
+  headEl.hidden = true;
   form.hidden = true;
+  switchEl.hidden = true;
   successEl.hidden = false;
 }
 
