@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Ticket — Kazbegi Gear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="30" height="30">
+          <path d="M4 30 L14 12 L20 22 L25 14 L36 30 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">Kazbegi Gear</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="ticket.html" class="header-cart-link">
+        Your Ticket
+        <span class="header-cart-badge" id="header-cart-badge" hidden>0</span>
+      </a>
+    </nav>
+    <div class="header-loc">Gudauri Base Camp</div>
+    <div class="header-auth" id="header-auth"></div>
+  </div>
+</header>
+
+<main class="wrap ticket-page-wrap">
+  <div class="lift-ticket">
+    <div class="ticket-top">
+      <p class="ticket-eyebrow">Kazbegi Gear</p>
+      <h2>Rental Ticket</h2>
+      <div class="ticket-days">
+        <label for="rental-days">Days</label>
+        <div class="stepper stepper-days">
+          <button type="button" class="step-btn" data-days-step="-1">–</button>
+          <input type="number" id="rental-days" class="qty-input" value="1" min="1" max="30" readonly>
+          <button type="button" class="step-btn" data-days-step="1">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket-perf" aria-hidden="true"></div>
+
+    <div class="ticket-lines" id="ticket-lines">
+      <p class="ticket-empty">No gear selected yet. Add items from the catalog.</p>
+    </div>
+
+    <div class="ticket-perf" aria-hidden="true"></div>
+
+    <div class="ticket-total">
+      <span>Total</span>
+      <span id="ticket-total-amount">0 GEL</span>
+    </div>
+
+    <div class="ticket-auth-gate" id="ticket-auth-gate" hidden>
+      <p class="ticket-auth-message">Sign in to reserve your gear.</p>
+      <a href="signin.html" class="btn btn-primary btn-block">Sign In / Register</a>
+    </div>
+
+    <div class="ticket-checkout" id="ticket-checkout">
+      <div class="payment-methods">
+        <p class="payment-methods-label">Payment method</p>
+        <label class="payment-option">
+          <input type="radio" name="payment-method" value="cashier" checked>
+          <span>Cash or card at cashier</span>
+        </label>
+        <label class="payment-option payment-option-disabled">
+          <input type="radio" name="payment-method" value="online" disabled>
+          <span>Card online <em>Coming soon</em></span>
+        </label>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" id="reserve-btn" disabled>Reserve this gear</button>
+      <p class="ticket-note">Pay at pickup, base camp desk — unless you choose card online.</p>
+    </div>
+  </div>
+
+  <p class="ticket-page-back"><a href="index.html#catalog">← Keep browsing gear</a></p>
+</main>
+
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <svg class="confirm-check" viewBox="0 0 52 52" aria-hidden="true"><path d="M14 27 L22 35 L38 17" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h3 id="confirm-title">Reservation held</h3>
+    <p class="confirm-order-code" id="confirm-order-code"></p>
+    <p id="confirm-summary"></p>
+    <p class="confirm-sub">Bring ID to the base camp desk to collect your gear and pay for your stay.</p>
+    <button type="button" class="btn btn-primary" id="confirm-close">Done</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Kazbegi Gear · Gudauri Base Camp</span>
+    <span>Open daily, 08:00–19:00, in season</span>
+  </div>
+</footer>
+
+<script type="module" src="ticket-auth.js"></script>
+<script type="module" src="orders.js"></script>
+<script src="cart-store.js"></script>
+<script src="ticket.js"></script>
+</body>
+</html>

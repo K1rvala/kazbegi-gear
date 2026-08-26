@@ -107,6 +107,16 @@ button{font-family:inherit;}
   transition:color .15s ease, border-color .15s ease;
 }
 .header-nav a:hover{color:var(--pine-950); border-color:var(--pine-400);}
+.header-cart-link{ display:inline-flex; align-items:center; gap:6px; }
+.header-cart-badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:18px; height:18px;
+  padding:0 5px;
+  border-radius:999px;
+  background:var(--amber);
+  color:var(--ink);
+  font-size:11px; font-weight:700;
+}
 .header-loc{
   font-size:12.5px; color:var(--ink-soft);
   border:1px solid var(--line);
@@ -207,10 +217,6 @@ button{font-family:inherit;}
 
 /* ---- main grid ---- */
 .main-grid{
-  display:grid;
-  grid-template-columns:1fr 340px;
-  gap:56px;
-  align-items:start;
   padding:64px 28px 100px;
 }
 .catalog-col{ display:flex; flex-direction:column; gap:56px; min-width:0; }
@@ -504,8 +510,24 @@ button{font-family:inherit;}
 }
 .qty-input::-webkit-inner-spin-button, .qty-input::-webkit-outer-spin-button{ -webkit-appearance:none; margin:0; }
 
+/* ---- ticket page ---- */
+.ticket-page-wrap{
+  padding:56px 28px 100px;
+  max-width:560px;
+  margin:0 auto;
+}
+.ticket-page-back{
+  text-align:center;
+  margin-top:20px;
+}
+.ticket-page-back a{
+  font-size:13.5px; font-weight:600;
+  color:var(--pine-800);
+  text-decoration:none;
+}
+.ticket-page-back a:hover{ color:var(--amber-dark); }
+
 /* ---- lift ticket ---- */
-.ticket-col{ position:sticky; top:132px; }
 .lift-ticket{
   background:var(--paper);
   border-radius:var(--radius-lg);
@@ -864,8 +886,6 @@ button{font-family:inherit;}
 
 /* ---- responsive ---- */
 @media (max-width: 980px){
-  .main-grid{ grid-template-columns:1fr; }
-  .ticket-col{ position:static; order:-1; }
   .item-grid{ grid-template-columns:repeat(2, 1fr); }
 }
 @media (max-width: 620px){
