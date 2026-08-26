@@ -133,6 +133,18 @@
     refreshHeaderBadge();
   }
 
+  // The "kazbegi-cart-updated" CustomEvent only fires in the tab/page that
+  // made the change. The browser's native "storage" event is what notifies
+  // *other* already-open tabs on the same origin when localStorage changes
+  // elsewhere - bridge it into our own event so every open page (badges,
+  // the ticket page's render) stays in sync regardless of which tab made
+  // the change.
+  window.addEventListener("storage", (e) => {
+    if (e.key === KEY) {
+      window.dispatchEvent(new CustomEvent("kazbegi-cart-updated"));
+    }
+  });
+
   window.CartStore = {
     FULL_SET_PRICE,
     load,
