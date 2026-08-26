@@ -6,27 +6,36 @@
 <title>Kazbegi Gear — Ski &amp; Snowboard Rental</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <div class="brand">
+    <a href="index.html" class="brand">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 40 40" width="30" height="30">
           <path d="M4 30 L14 12 L20 22 L25 14 L36 30 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
         </svg>
       </span>
       <span class="brand-name">Kazbegi Gear</span>
-    </div>
+    </a>
     <nav class="header-nav">
-      <a href="#catalog">Gear</a>
+      <a href="index.html">Home</a>
       <a href="#ticket">Your Ticket</a>
     </nav>
     <div class="header-loc">Gudauri Base Camp</div>
     <div class="header-auth" id="header-auth"></div>
+  </div>
+  <div class="wrap header-tabs-row">
+    <div class="category-tabs" id="category-tabs" role="tablist">
+      <button type="button" class="category-tab is-active" role="tab" aria-selected="true" data-tab-target="accessories">Accessories</button>
+      <button type="button" class="category-tab" role="tab" aria-selected="false" data-tab-target="skis">Skis</button>
+      <button type="button" class="category-tab" role="tab" aria-selected="false" data-tab-target="snowboards">Snowboards</button>
+      <button type="button" class="category-tab" role="tab" aria-selected="false" data-tab-target="footwear">Footwear</button>
+      <button type="button" class="category-tab" role="tab" aria-selected="false" data-tab-target="clothing">Clothing</button>
+    </div>
   </div>
 </header>
 
@@ -34,40 +43,40 @@
   <svg class="hero-mountains" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <defs>
       <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#f3b878" stop-opacity="0.85"/>
-        <stop offset="100%" stop-color="#f3b878" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#43c6ea" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#43c6ea" stop-opacity="0"/>
       </radialGradient>
     </defs>
 
     <g class="layer-sun">
       <circle cx="1280" cy="130" r="95" fill="url(#sunGlow)"/>
-      <circle cx="1280" cy="130" r="32" fill="#f6e3d3" opacity="0.9"/>
+      <circle cx="1280" cy="130" r="32" fill="#d8f3fb" opacity="0.9"/>
     </g>
 
     <g class="layer-clouds">
-      <g class="cloud cloud-a" opacity="0.55" fill="#fffdf8">
+      <g class="cloud cloud-a" opacity="0.55" fill="#fffefa">
         <ellipse cx="260" cy="150" rx="70" ry="20"/>
         <ellipse cx="312" cy="140" rx="50" ry="16"/>
         <ellipse cx="212" cy="145" rx="45" ry="15"/>
       </g>
-      <g class="cloud cloud-b" opacity="0.35" fill="#fffdf8">
+      <g class="cloud cloud-b" opacity="0.35" fill="#fffefa">
         <ellipse cx="820" cy="95" rx="60" ry="16"/>
         <ellipse cx="866" cy="87" rx="40" ry="13"/>
       </g>
     </g>
 
-    <path class="layer-far" opacity="0.4" fill="#6d8c7b" d="M0,600 L0,420 L120,340 L220,400 L340,300 L460,380 L580,320 L700,400 L820,330 L960,410 L1080,340 L1200,400 L1320,330 L1440,390 L1600,350 L1600,600 Z"/>
+    <path class="layer-far" opacity="0.4" fill="#8b8968" d="M0,600 L0,420 L120,340 L220,400 L340,300 L460,380 L580,320 L700,400 L820,330 L960,410 L1080,340 L1200,400 L1320,330 L1440,390 L1600,350 L1600,600 Z"/>
 
-    <path class="layer-mid" opacity="0.7" fill="#3c5c4c" d="M0,600 L0,470 L150,380 L280,460 L420,350 L560,450 L700,370 L840,460 L980,360 L1120,450 L1260,380 L1400,460 L1600,400 L1600,600 Z"/>
-    <g class="layer-mid" fill="#f7f5f0" opacity="0.9">
+    <path class="layer-mid" opacity="0.7" fill="#5c5a3f" d="M0,600 L0,470 L150,380 L280,460 L420,350 L560,450 L700,370 L840,460 L980,360 L1120,450 L1260,380 L1400,460 L1600,400 L1600,600 Z"/>
+    <g class="layer-mid" fill="#faf6e9" opacity="0.9">
       <path d="M420,350 L390,395 L450,395 Z"/>
       <path d="M700,370 L672,412 L728,412 Z"/>
       <path d="M980,360 L951,404 L1009,404 Z"/>
       <path d="M1260,380 L1233,420 L1287,420 Z"/>
     </g>
 
-    <path class="layer-near" fill="#14211d" d="M0,600 L0,520 L100,470 L200,540 L320,460 L440,530 L560,450 L680,540 L800,470 L920,550 L1040,460 L1160,540 L1280,470 L1400,550 L1600,500 L1600,600 Z"/>
-    <g class="layer-near" fill="#14211d">
+    <path class="layer-near" fill="#16160f" d="M0,600 L0,520 L100,470 L200,540 L320,460 L440,530 L560,450 L680,540 L800,470 L920,550 L1040,460 L1160,540 L1280,470 L1400,550 L1600,500 L1600,600 Z"/>
+    <g class="layer-near" fill="#16160f">
       <path d="M100,444 L88,470 L112,470 Z"/>
       <path d="M320,434 L308,460 L332,460 Z"/>
       <path d="M560,424 L548,450 L572,450 Z"/>
@@ -88,7 +97,7 @@
 <main class="wrap main-grid" id="catalog">
   <div class="catalog-col">
 
-    <section class="category" aria-labelledby="cat-accessories">
+    <section class="category" aria-labelledby="cat-accessories" data-tab="accessories" role="tabpanel">
       <div class="category-head">
         <h2 id="cat-accessories"><span class="cat-index">01</span> Accessories</h2>
         <p>Grab-and-go essentials, 5 GEL each per day.</p>
@@ -203,7 +212,7 @@
       </div>
     </section>
 
-    <section class="category" aria-labelledby="cat-skis">
+    <section class="category" aria-labelledby="cat-skis" data-tab="skis" role="tabpanel" hidden>
       <div class="category-head">
         <h2 id="cat-skis"><span class="cat-index">02</span> Skis</h2>
         <p>Any pair, 30 GEL per day — choose your ski length, foot size, and weight.</p>
@@ -329,7 +338,7 @@
       </div>
     </section>
 
-    <section class="category" aria-labelledby="cat-snowboards">
+    <section class="category" aria-labelledby="cat-snowboards" data-tab="snowboards" role="tabpanel" hidden>
       <div class="category-head">
         <h2 id="cat-snowboards"><span class="cat-index">03</span> Snowboards</h2>
         <p>Any board, 30 GEL per day — choose your foot size and weight.</p>
@@ -397,7 +406,7 @@
       </div>
     </section>
 
-    <section class="category" aria-labelledby="cat-footwear">
+    <section class="category" aria-labelledby="cat-footwear" data-tab="footwear" role="tabpanel" hidden>
       <div class="category-head">
         <h2 id="cat-footwear"><span class="cat-index">04</span> Footwear</h2>
         <p>Boots fitted to your shoe size, 20 GEL per day.</p>
@@ -481,7 +490,7 @@
       </div>
     </section>
 
-    <section class="category" aria-labelledby="cat-clothing">
+    <section class="category" aria-labelledby="cat-clothing" data-tab="clothing" role="tabpanel" hidden>
       <div class="category-head">
         <h2 id="cat-clothing"><span class="cat-index">05</span> Clothing</h2>
         <p>Shell layers, sized to fit.</p>
@@ -599,6 +608,15 @@
       </div>
     </section>
 
+    <div class="category-pager" id="category-pager">
+      <button type="button" class="category-pager-btn category-pager-prev" id="category-prev" hidden>
+        ← <span id="category-prev-label"></span>
+      </button>
+      <button type="button" class="category-pager-btn category-pager-next" id="category-next">
+        <span id="category-next-label"></span> →
+      </button>
+    </div>
+
   </div>
 
   <aside class="ticket-col" id="ticket">
@@ -677,6 +695,7 @@
 <script type="module" src="orders.js"></script>
 <script src="script.js"></script>
 <script src="item-modal.js"></script>
+<script src="category-tabs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="hero-parallax.js"></script>
