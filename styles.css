@@ -443,6 +443,12 @@ button{font-family:inherit;}
   background:var(--snow);
   color:var(--ink);
 }
+.stock-note{
+  font-size:12px; font-weight:600;
+  color:var(--pine-800);
+  margin-top:-1px;
+}
+.stock-note-empty{ color:var(--amber-dark); }
 .option-row-toggle{
   flex-direction:row;
   align-items:center;
@@ -883,6 +889,60 @@ button{font-family:inherit;}
 }
 .admin-head-orders{ margin-top:40px; }
 .admin-cell-wrap{ white-space:normal; min-width:220px; }
+
+.admin-head-stock{ margin-bottom:16px; }
+.stock-form{
+  display:flex; align-items:flex-end; flex-wrap:wrap; gap:14px;
+  background:var(--paper);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  padding:18px;
+  margin-bottom:16px;
+}
+.stock-form-field{ display:flex; flex-direction:column; gap:5px; }
+.stock-form-field label{
+  font-size:11.5px; font-weight:600; color:var(--ink-soft);
+  text-transform:uppercase; letter-spacing:0.03em;
+}
+.stock-form-field select,
+.stock-form-field input{
+  font-family:var(--font-body);
+  font-size:14px;
+  padding:8px 10px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--line);
+  background:var(--snow);
+  color:var(--ink);
+}
+.stock-form-field-qty input{ width:90px; }
+.stock-row-actions{ display:flex; align-items:center; gap:6px; white-space:nowrap; }
+.stepper-sm-btn{
+  width:24px; height:24px;
+  border:1px solid var(--line);
+  background:var(--snow);
+  color:var(--pine-900);
+  border-radius:50%;
+  font-size:14px; line-height:1;
+  cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:background .12s ease;
+}
+.stepper-sm-btn:hover{ background:var(--amber-tint); color:var(--amber-dark); }
+.stock-remove-btn{
+  border:none; background:none;
+  color:var(--ink-soft);
+  font-size:12.5px; font-weight:600;
+  cursor:pointer;
+  margin-left:6px;
+  text-decoration:underline;
+}
+.stock-remove-btn:hover{ color:var(--amber-dark); }
+.stock-error{
+  font-size:13px; font-weight:600;
+  color:var(--amber-dark);
+  margin:-6px 0 16px;
+}
 
 /* ---- responsive ---- */
 @media (max-width: 980px){

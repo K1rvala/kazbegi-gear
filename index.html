@@ -240,6 +240,17 @@
               <button type="button" class="item-config-close" aria-label="Close">×</button>
             </div>
             <div class="option-row">
+              <label for="ski-type">Ski type</label>
+              <select id="ski-type" class="option-select" data-stock-select="skis">
+                <option>Good for beginners</option>
+                <option>Intermediate</option>
+                <option>Expert</option>
+                <option>All-Mountain</option>
+                <option>Off-Piste</option>
+              </select>
+              <p class="stock-note" data-stock-note>—</p>
+            </div>
+            <div class="option-row">
               <label for="ski-size">Ski length</label>
               <select id="ski-size" class="option-select">
                 <option value="120cm">120 cm</option>
@@ -634,8 +645,9 @@
 
 <script type="module" src="index-auth.js?v=2"></script>
 <script src="cart-store.js?v=2"></script>
-<script src="script.js?v=2"></script>
-<script src="item-modal.js?v=2"></script>
+<script type="module" src="stock.js"></script>
+<script src="script.js?v=3"></script>
+<script src="item-modal.js?v=3"></script>
 <script src="category-tabs.js?v=2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>

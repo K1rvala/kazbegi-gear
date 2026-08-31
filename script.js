@@ -35,6 +35,10 @@
     const qtyInput = card.querySelector(".qty-input");
     const addBtn = card.querySelector(".item-config-done");
 
+    function stockMax() {
+      return card.dataset.stockMax !== undefined ? parseInt(card.dataset.stockMax, 10) || 0 : 10;
+    }
+
     function syncAddBtn() {
       if (addBtn) addBtn.disabled = (parseInt(qtyInput.value, 10) || 0) <= 0;
     }
@@ -42,11 +46,16 @@
     card.querySelectorAll(".step-btn[data-step]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const delta = parseInt(btn.dataset.step, 10);
-        const next = Math.min(10, Math.max(0, (parseInt(qtyInput.value, 10) || 0) + delta));
+        const max = Math.min(10, stockMax());
+        const next = Math.min(max, Math.max(0, (parseInt(qtyInput.value, 10) || 0) + delta));
         qtyInput.value = next;
         syncAddBtn();
       });
     });
+
+    if (qtyInput) {
+      qtyInput.addEventListener("change", syncAddBtn);
+    }
 
     if (addBtn) {
       addBtn.addEventListener("click", () => {

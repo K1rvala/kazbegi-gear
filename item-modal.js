@@ -23,8 +23,10 @@
     const qtyInput = config.querySelector(".qty-input");
     const addBtn = config.querySelector(".item-config-done");
     if (qtyInput) {
-      qtyInput.value = 1;
-      if (addBtn) addBtn.disabled = false;
+      const max = card.dataset.stockMax !== undefined ? parseInt(card.dataset.stockMax, 10) || 0 : 1;
+      const initialQty = Math.min(1, max);
+      qtyInput.value = initialQty;
+      if (addBtn) addBtn.disabled = initialQty <= 0;
     }
 
     config.classList.add("is-open");

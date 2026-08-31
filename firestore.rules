@@ -44,5 +44,15 @@ service cloud.firestore {
 
       allow update, delete: if false;
     }
+
+    match /stock/{stockId} {
+
+      // Stock levels are shown on the public catalog, so anyone can read them.
+      allow read: if true;
+
+      // Only admins can add, adjust, or remove stock.
+      allow write: if request.auth != null &&
+                   get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
   }
 }
