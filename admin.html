@@ -53,6 +53,39 @@
       </table>
     </div>
 
+    <div class="admin-head admin-head-stock">
+      <h1>Gear stock</h1>
+    </div>
+    <form id="stock-form" class="stock-form">
+      <div class="stock-form-field">
+        <label for="stock-item-select">Item</label>
+        <select id="stock-item-select"></select>
+      </div>
+      <div class="stock-form-field">
+        <label for="stock-type-select" id="stock-type-label">Ski type</label>
+        <select id="stock-type-select"></select>
+      </div>
+      <div class="stock-form-field stock-form-field-qty">
+        <label for="stock-qty-input">Quantity to add</label>
+        <input type="number" id="stock-qty-input" min="1" value="1">
+      </div>
+      <button type="submit" class="btn btn-primary">Add stock</button>
+    </form>
+    <p id="stock-error" class="stock-error" hidden></p>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Type</th>
+            <th>In stock</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="stock-table-body"></tbody>
+      </table>
+    </div>
+
     <div class="admin-head admin-head-orders">
       <h1>Order history</h1>
       <p id="orders-count" class="admin-count"></p>

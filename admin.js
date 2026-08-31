@@ -3,6 +3,11 @@ import { watchAuth, renderHeaderAuth, escapeHtml } from "./site-auth.js";
 import {
   collection,
   getDocs,
+  doc,
+  setDoc,
+  deleteDoc,
+  increment,
+  serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 const headerAuth = document.getElementById("header-auth");
@@ -12,6 +17,158 @@ const countEl = document.getElementById("admin-count");
 const tbody = document.getElementById("admin-table-body");
 const ordersCountEl = document.getElementById("orders-count");
 const ordersBody = document.getElementById("orders-table-body");
+
+// New gear items go here — the admin form and the on-site stock display
+// (see stock.js) both key off itemKey/type, so anything added here just
+// needs a matching data-stock-select="<itemKey>" select on the item card.
+const STOCK_ITEMS = {
+  skis: {
+    label: "Skis",
+    types: ["Good for beginners", "Intermediate", "Expert", "All-Mountain", "Off-Piste"],
+  },
+};
+
+function slugify(text) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+function stockDocId(itemKey, type) {
+  return `${itemKey}__${slugify(type)}`;
+}
+
+const stockForm = document.getElementById("stock-form");
+const stockItemSelect = document.getElementById("stock-item-select");
+const stockTypeSelect = document.getElementById("stock-type-select");
+const stockTypeLabel = document.getElementById("stock-type-label");
+const stockQtyInput = document.getElementById("stock-qty-input");
+const stockErrorEl = document.getElementById("stock-error");
+const stockBody = document.getElementById("stock-table-body");
+
+let stockRows = [];
+let stockAdminInitialized = false;
+
+function populateStockItemSelect() {
+  stockItemSelect.innerHTML = Object.entries(STOCK_ITEMS)
+    .map(([key, item]) => `<option value="${escapeHtml(key)}">${escapeHtml(item.label)}</option>`)
+    .join("");
+  populateStockTypeSelect();
+}
+
+function populateStockTypeSelect() {
+  const item = STOCK_ITEMS[stockItemSelect.value];
+  if (!item) return;
+  stockTypeLabel.textContent = `${item.label.replace(/s$/, "")} type`;
+  stockTypeSelect.innerHTML = item.types
+    .map((type) => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`)
+    .join("");
+}
+
+function renderStockTable() {
+  stockRows.sort((a, b) => a.itemLabel.localeCompare(b.itemLabel) || a.type.localeCompare(b.type));
+  stockBody.innerHTML = stockRows
+    .map(
+      (r) => `
+    <tr>
+      <td>${escapeHtml(r.itemLabel)}</td>
+      <td>${escapeHtml(r.type)}</td>
+      <td>${r.quantity}</td>
+      <td class="stock-row-actions">
+        <button type="button" class="stepper-sm-btn" data-stock-adjust="-1" data-stock-id="${r.id}">−</button>
+        <button type="button" class="stepper-sm-btn" data-stock-adjust="1" data-stock-id="${r.id}">+</button>
+        <button type="button" class="stock-remove-btn" data-stock-remove="${r.id}">Remove</button>
+      </td>
+    </tr>
+  `
+    )
+    .join("");
+}
+
+async function loadStock() {
+  const snap = await getDocs(collection(db, "stock"));
+  stockRows = [];
+  snap.forEach((docSnap) => stockRows.push({ id: docSnap.id, ...docSnap.data() }));
+  renderStockTable();
+}
+
+async function adjustStock(id, delta) {
+  const row = stockRows.find((r) => r.id === id);
+  if (!row) return;
+  const nextQty = Math.max(0, row.quantity + delta);
+  await setDoc(
+    doc(db, "stock", id),
+    { quantity: nextQty, updatedAt: serverTimestamp() },
+    { merge: true }
+  );
+  row.quantity = nextQty;
+  renderStockTable();
+}
+
+async function removeStock(id) {
+  await deleteDoc(doc(db, "stock", id));
+  stockRows = stockRows.filter((r) => r.id !== id);
+  renderStockTable();
+}
+
+function initStockAdmin() {
+  if (stockAdminInitialized) {
+    loadStock().catch((err) => console.error(err));
+    return;
+  }
+  stockAdminInitialized = true;
+
+  populateStockItemSelect();
+  stockItemSelect.addEventListener("change", populateStockTypeSelect);
+
+  stockForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    stockErrorEl.hidden = true;
+
+    const itemKey = stockItemSelect.value;
+    const item = STOCK_ITEMS[itemKey];
+    const type = stockTypeSelect.value;
+    const qty = parseInt(stockQtyInput.value, 10);
+    if (!item || !type || !qty || qty <= 0) return;
+
+    const id = stockDocId(itemKey, type);
+    try {
+      await setDoc(
+        doc(db, "stock", id),
+        {
+          itemKey,
+          itemLabel: item.label,
+          type,
+          quantity: increment(qty),
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+      stockQtyInput.value = 1;
+      await loadStock();
+    } catch (err) {
+      console.error(err);
+      stockErrorEl.hidden = false;
+      stockErrorEl.textContent = "Couldn't update stock. Please try again.";
+    }
+  });
+
+  stockBody.addEventListener("click", (e) => {
+    const adjustBtn = e.target.closest("[data-stock-adjust]");
+    if (adjustBtn) {
+      adjustStock(adjustBtn.dataset.stockId, parseInt(adjustBtn.dataset.stockAdjust, 10));
+      return;
+    }
+    const removeBtn = e.target.closest("[data-stock-remove]");
+    if (removeBtn) {
+      removeStock(removeBtn.dataset.stockRemove);
+    }
+  });
+
+  loadStock().catch((err) => {
+    console.error(err);
+    stockErrorEl.hidden = false;
+    stockErrorEl.textContent = "Couldn't load stock. Please try again later.";
+  });
+}
 
 function formatDate(ts) {
   if (!ts || typeof ts.toDate !== "function") return "—";
@@ -43,6 +200,8 @@ watchAuth(async (state) => {
 
   statusEl.hidden = true;
   contentEl.hidden = false;
+
+  initStockAdmin();
 
   try {
     const snap = await getDocs(collection(db, "users"));
