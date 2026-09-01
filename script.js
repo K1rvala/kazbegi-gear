@@ -65,8 +65,12 @@
         const name = card.dataset.name;
         const price = parseFloat(card.dataset.price);
         const optionsText = describeOptions(card);
+        const stockSelect = card.querySelector("[data-stock-select]");
+        const stockRef = stockSelect
+          ? { itemKey: stockSelect.dataset.stockSelect, type: stockSelect.value }
+          : null;
 
-        window.CartStore.addLine(name, price, optionsText, qty);
+        window.CartStore.addLine(name, price, optionsText, qty, stockRef);
 
         qtyInput.value = 0;
         syncAddBtn();

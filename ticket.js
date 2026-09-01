@@ -110,6 +110,7 @@
       price: line.price,
       options: line.optionsText,
       lineTotal: line.price * line.qty * days,
+      stockRef: line.stockRef || null,
     }));
     const summaryParts = cart.map(
       (line) => `${line.qty} × ${line.name}${line.optionsText ? ` (${line.optionsText})` : ""}`

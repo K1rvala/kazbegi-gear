@@ -24,13 +24,13 @@
     window.dispatchEvent(new CustomEvent("kazbegi-cart-updated"));
   }
 
-  function addLine(name, price, optionsText, qty) {
+  function addLine(name, price, optionsText, qty, stockRef) {
     const state = load();
     const existing = state.cart.find((l) => l.name === name && l.optionsText === optionsText);
     if (existing) {
       existing.qty += qty;
     } else {
-      state.cart.push({ id: state.nextLineId++, name, price, optionsText, qty });
+      state.cart.push({ id: state.nextLineId++, name, price, optionsText, qty, stockRef: stockRef || null });
     }
     save(state);
     return state;
