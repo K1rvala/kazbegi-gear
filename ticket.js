@@ -14,6 +14,18 @@
     return Math.min(max, Math.max(min, n));
   }
 
+  // Cart lines added before stock tracking existed (or before a given item
+  // wired up its stock select) won't carry a stockRef. Recover it from the
+  // option text so an already-populated cart still decrements correctly.
+  function deriveStockRef(line) {
+    if (line.stockRef) return line.stockRef;
+    if (line.name === "Skis" && line.optionsText) {
+      const match = line.optionsText.match(/Ski type:\s*([^·]+?)(?:\s*·|$)/);
+      if (match) return { itemKey: "skis", type: match[1].trim() };
+    }
+    return null;
+  }
+
   function render() {
     const state = window.CartStore.load();
     const cart = state.cart;
@@ -110,6 +122,7 @@
       price: line.price,
       options: line.optionsText,
       lineTotal: line.price * line.qty * days,
+      stockRef: deriveStockRef(line),
     }));
     const summaryParts = cart.map(
       (line) => `${line.qty} × ${line.name}${line.optionsText ? ` (${line.optionsText})` : ""}`

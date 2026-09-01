@@ -1,5 +1,6 @@
 import { db } from "./firebase-init.js";
 import { watchAuth, renderHeaderAuth, escapeHtml } from "./site-auth.js";
+import { stockDocId } from "./stock-shared.js";
 import {
   collection,
   getDocs,
@@ -27,14 +28,6 @@ const STOCK_ITEMS = {
     types: ["Good for beginners", "Intermediate", "Expert", "All-Mountain", "Off-Piste"],
   },
 };
-
-function slugify(text) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
-function stockDocId(itemKey, type) {
-  return `${itemKey}__${slugify(type)}`;
-}
 
 const stockForm = document.getElementById("stock-form");
 const stockItemSelect = document.getElementById("stock-item-select");

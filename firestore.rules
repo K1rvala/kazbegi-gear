@@ -50,9 +50,25 @@ service cloud.firestore {
       // Stock levels are shown on the public catalog, so anyone can read them.
       allow read: if true;
 
-      // Only admins can add, adjust, or remove stock.
-      allow write: if request.auth != null &&
+      // Only admins can create a stock entry or delete one.
+      allow create, delete: if request.auth != null &&
                    get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+
+      // Admins can adjust stock freely. Any other signed-in user may only
+      // decrement quantity by up to 10 units (matches the cart's per-line
+      // qty cap) and never below zero or touch any other field — this is
+      // what lets reserving gear reduce the count without giving regular
+      // users a way to overwrite or inflate stock.
+      allow update: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+        || (
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['quantity', 'updatedAt'])
+          && request.resource.data.quantity is int
+          && request.resource.data.quantity < resource.data.quantity
+          && request.resource.data.quantity >= resource.data.quantity - 10
+          && request.resource.data.quantity >= 0
+        )
+      );
     }
   }
 }
