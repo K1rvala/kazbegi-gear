@@ -5,6 +5,14 @@
 
   // Reuse the product photo already on the card face as the header image
   // inside that card's "choose options" popup, instead of leaving it blank.
+  // Most of these source photos have their subject in the upper portion of
+  // the frame, so the CSS default crops toward the top — these two are
+  // framed the other way (subject lower in the shot) and need overriding
+  // or the crop shows mostly blank snow.
+  const PHOTO_CROP_OVERRIDES = {
+    "Snowboard": "center 68%",
+    "Ski Sticks": "center 65%",
+  };
   itemCards.forEach((card) => {
     const config = card.querySelector(".item-config");
     const sourceImg = card.querySelector(".item-media img");
@@ -14,6 +22,8 @@
     photo.src = sourceImg.getAttribute("src");
     photo.alt = sourceImg.getAttribute("alt") || "";
     photo.loading = "lazy";
+    const crop = PHOTO_CROP_OVERRIDES[card.dataset.name];
+    if (crop) photo.style.objectPosition = crop;
     config.insertBefore(photo, config.firstChild);
   });
 
