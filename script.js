@@ -3,6 +3,20 @@
 
   const itemCards = Array.from(document.querySelectorAll(".item-card"));
 
+  // Reuse the product photo already on the card face as the header image
+  // inside that card's "choose options" popup, instead of leaving it blank.
+  itemCards.forEach((card) => {
+    const config = card.querySelector(".item-config");
+    const sourceImg = card.querySelector(".item-media img");
+    if (!config || !sourceImg) return;
+    const photo = document.createElement("img");
+    photo.className = "item-config-photo";
+    photo.src = sourceImg.getAttribute("src");
+    photo.alt = sourceImg.getAttribute("alt") || "";
+    photo.loading = "lazy";
+    config.insertBefore(photo, config.firstChild);
+  });
+
   function describeOptions(card) {
     const parts = [];
     card.querySelectorAll(".option-select").forEach((select) => {

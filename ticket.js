@@ -39,19 +39,27 @@
       const lineTotal = line.price * line.qty * days;
       grandTotal += lineTotal;
 
+      const imgSrc = (window.ITEM_IMAGES || {})[line.name];
+      const thumb = imgSrc
+        ? `<img class="ticket-line-thumb" src="${imgSrc}" alt="" loading="lazy">`
+        : `<div class="ticket-line-thumb ticket-line-thumb-empty"></div>`;
+
       const el = document.createElement("div");
       el.className = "ticket-line";
       el.innerHTML = `
-        <div class="ticket-line-top">
-          <span class="ticket-line-name">${line.name}</span>
-          <span class="ticket-line-amount">${lineTotal} GEL</span>
-        </div>
-        <div class="ticket-line-bottom">
-          <span class="ticket-line-meta">${line.optionsText || `${line.price} GEL/day`}</span>
-          <div class="stepper stepper-sm">
-            <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="-1">–</button>
-            <span class="ticket-line-qty">${line.qty}</span>
-            <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="1">+</button>
+        ${thumb}
+        <div class="ticket-line-content">
+          <div class="ticket-line-top">
+            <span class="ticket-line-name">${line.name}</span>
+            <span class="ticket-line-amount">${lineTotal} GEL</span>
+          </div>
+          <div class="ticket-line-bottom">
+            <span class="ticket-line-meta">${line.optionsText || `${line.price} GEL/day`}</span>
+            <div class="stepper stepper-sm">
+              <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="-1">–</button>
+              <span class="ticket-line-qty">${line.qty}</span>
+              <button type="button" class="step-btn" data-ticket-line="${line.id}" data-ticket-step="1">+</button>
+            </div>
           </div>
         </div>
       `;
@@ -73,12 +81,14 @@
         const discountEl = document.createElement("div");
         discountEl.className = "ticket-line ticket-line-discount";
         discountEl.innerHTML = `
-          <div class="ticket-line-top">
-            <span class="ticket-line-name">Full set discount</span>
-            <span class="ticket-line-amount">−${totalDiscount} GEL</span>
-          </div>
-          <div class="ticket-line-bottom">
-            <span class="ticket-line-meta">${setCount} full ${setCount === 1 ? "set" : "sets"} at ${window.CartStore.FULL_SET_PRICE} GEL/day each</span>
+          <div class="ticket-line-content">
+            <div class="ticket-line-top">
+              <span class="ticket-line-name">Full set discount</span>
+              <span class="ticket-line-amount">−${totalDiscount} GEL</span>
+            </div>
+            <div class="ticket-line-bottom">
+              <span class="ticket-line-meta">${setCount} full ${setCount === 1 ? "set" : "sets"} at ${window.CartStore.FULL_SET_PRICE} GEL/day each</span>
+            </div>
           </div>
         `;
         ticketLines.appendChild(discountEl);
